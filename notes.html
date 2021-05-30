@@ -57,13 +57,13 @@
     <div id="container">
       <div id="upper">
         <div id="upper-left">
-
+          i
         </div>
         <div id="upper-middle">
           <p class="header-text">Notes</p>
         </div>
         <div id="upper-right">
-
+          s
         </div>
       </div>
       <div id="lower">
@@ -71,6 +71,30 @@
       </div>
     </div>
     <script>
+      var appState = {
+        openWindow: "main",
+        theme: "light"
+      };
+
+      var settingsBtn = document.getElementById("upper-right");
+      settingsBtn.addEventListener('click', toggleSettings);
+
+      function toggleSettings() {
+        var target = document.getElementById("lower");
+
+        if (appState.openWindow !== "settings") {
+          lower.innerHTML = "settings test";
+          appState.openWindow = "settings";
+          console.log(appState.openWindow);
+        } else {
+          lower.innerHTML = '<textarea id="txt"></textarea>';
+          textarea = document.getElementById("txt");
+          textarea.addEventListener('input', writeLocalStorage);
+          readLocalStorage();
+          appState.openWindow = "main";
+        }
+      }
+      
       var textarea = document.getElementById("txt");
       textarea.addEventListener('input', writeLocalStorage);
 
@@ -97,10 +121,7 @@
           readLocalStorage();
       }
 
-      // var fixed = document.getElementById('main');
-      // fixed.addEventListener('touchmove', function(e) {
-      //   e.preventDefault();
-      // }, false);
+      
     </script>
   </body>
 </html>
