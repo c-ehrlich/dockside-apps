@@ -12,7 +12,7 @@ Version 3
 Version 2
 [] The notes app should have a button that toggles between showing the text field 
    and a (empty for now except some placeholder text) settings/info page
-[] The notes app should have 'branding' in the top middle area
+[x] The notes app should have 'branding' in the top middle area
 [] The textbox in the notes app should default to a nice monospace font and fallback to default monospace
 
 Version 1
