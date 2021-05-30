@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <style>
+      /* * { border: 1px solid purple; } */
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      #container {
+        display: flex;
+        flex-direction: column;
+        background-color: blue;
+        height: 100%;
+      }
+      #upper {
+        flex: 0 0 25px;
+        background-color: red;
+        display: flex;
+        flex-direction: row;
+      }
+      #lower {
+        flex: 1 1 auto;
+        background-color: green;
+      }
+
+      #upper-left {
+        flex: 0 0 25px;
+        background-color: orange;
+      }
+      #upper-middle {
+        flex: 1 1 auto;
+        background-color: yellow;
+      }
+      #upper-right {
+        flex: 0 0 25px;
+        background-color: pink;
+      }
+
+      #txt {
+        width: 100%;
+        height: 100%;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="upper">
+        <div id="upper-left">
+
+        </div>
+        <div id="upper-middle">
+
+        </div>
+        <div id="upper-right">
+
+        </div>
+      </div>
+      <div id="lower">
+        <textarea id="txt"></textarea>
+      </div>
+    </div>
+    <script>
+      var textarea = document.getElementById("txt");
+      textarea.addEventListener('input', writeLocalStorage);
+
+      function writeLocalStorage() {
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("text", textarea.value);
+        } else {
+            document.getElementById("err").innerHTML = "Localstorage not supported";
+        }
+      }
+
+      function readLocalStorage() {
+        if (typeof(Storage) !== "undefined") {
+            textarea.value = localStorage.getItem("text");
+        } else {
+            document.getElementById("err").innerHTML = "Localstorage not supported";
+        }
+      }
+
+      // `DOMContentLoaded` may fire before your script has a chance to run, so check before adding a listener
+      if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", readLocalStorage);
+      } else {  // `DOMContentLoaded` already fired
+          readLocalStorage();
+      }
+
+      // var fixed = document.getElementById('main');
+      // fixed.addEventListener('touchmove', function(e) {
+      //   e.preventDefault();
+      // }, false);
+    </script>
+  </body>
+</html>

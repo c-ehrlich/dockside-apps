@@ -1,0 +1,8 @@
+Version 1
+[] The landing page should have a link to open the notes app in a small window
+[] The landing page should have a link to open the notes app in a large window (for testing)
+[] The notes app should have a header bar that takes up 25px of vertical space
+[] The notes app should have a main div that takes up the remaining vertical space
+[] All content should take up 100% of horizontal space
+[] The main div should contain a text field that takes up 100% of that div
+[] The text field should use local storage so the text doesn't disappear if it's closed and reopened
