@@ -1,8 +1,25 @@
+Ideas for future Goals
+[] The notes app should default to dark or light mode depending on system UI
+[] The notes app should remember its color scheme by putting a settings object in local storage
+[] The notes app should have a place that links to my github (either in settings, or in a separate screen?)
+
+Version 3
+[] The notes app should have three themes, and the ability to toggle between them
+  [] Light mode (white background, black text)
+  [] Dark mode (TBD if this should be a black or dark grey background)
+  [] Skeuomorphism mode (yellow)
+
+Version 2
+[] The notes app should have a button that toggles between showing the text field 
+   and a (empty for now except some placeholder text) settings/info page
+[] The notes app should have 'branding' in the top middle area
+[] The textbox in the notes app should default to a nice monospace font and fallback to default monospace
+
 Version 1
-[] The landing page should have a link to open the notes app in a small window
-[] The landing page should have a link to open the notes app in a large window (for testing)
-[] The notes app should have a header bar that takes up 25px of vertical space
-[] The notes app should have a main div that takes up the remaining vertical space
-[] All content should take up 100% of horizontal space
-[] The main div should contain a text field that takes up 100% of that div
-[] The text field should use local storage so the text doesn't disappear if it's closed and reopened
+[x] The landing page should have a link to open the notes app in a small window
+[x] The landing page should have a link to open the notes app in a large window (for testing)
+[x] The notes app should have a header bar that takes up 25px of vertical space
+[x] The notes app should have a main div that takes up the remaining vertical space
+[x] All content in the notes app should take up 100% of horizontal space
+[x] The main div should contain a text field that takes up 100% of that div
+[x] The text field should use local storage so the text doesn't disappear if it's closed and reopened
