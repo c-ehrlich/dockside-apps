@@ -1,17 +1,21 @@
 Ideas for future Goals
 [] The notes app should default to dark or light mode depending on system UI
-[] The notes app should remember its color scheme by putting a settings object in local storage
+[] time tracker (2-3 different things to track, change their names in settings, start and pause buttons, keep data of every day forever)
+
+Version 4
+[] The Notes app should have a nicer menu (do some css?)
+[] The Notes app should have a place that links to my github (either in settings, or in a separate screen reached by clicking the top-left button?)
+[] The Notes app themes should also include the potential for font changes (handwriting-like font in yellow notes?)
 
 Version 3
-[] The notes app should have three themes, and the ability to toggle between them
-  [] Light mode (white background, black text)
-  [] Dark mode (TBD if this should be a black or dark grey background)
-  [] Skeuomorphism mode (yellow)
-  https://medium.com/@haxzie/dark-and-light-theme-switcher-using-css-variables-and-pure-javascript-zocada-dd0059d72fa2
-[] The CSS should be broken out from the html page, and into two files
-  [] 1. colors etc, used in every dockside app (to allow easy skinning)
-  [] 2. things specific to the components of the Notes app
-[] The notes app should have a place that links to my github (either in settings, or in a separate screen?)
+[x] The notes app should have three themes, and the ability to toggle between them
+  [x] Light mode (white background, black text)
+  [x] Dark mode (TBD if this should be a black or dark grey background)
+  [x] Skeuomorphism mode (yellow)
+[x] The notes app should remember its color scheme by putting a settings object in local storage
+[x] The CSS should be broken out from the html page, and into two files
+  [x] 1. colors etc, used in every dockside app (to allow easy skinning)
+  [x] 2. things specific to the components of the Notes app
 
 Version 2
 [x] The notes app should have a button that toggles between showing the text field 

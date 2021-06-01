@@ -1,6 +1,11 @@
-<html>
+<html lang="en">
   <head>
-    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <Title>Dockside Notes</Title>
+
     <link rel="stylesheet" href="themes.css">
     <link rel="stylesheet" href="notes.css">
 
@@ -19,14 +24,35 @@
         </div>
       </div>
       <div id="lower">
-        <textarea id="txt"></textarea>
+        <textarea id="txt" spellcheck="false"></textarea>
       </div>
     </div>
     <script>
       var appState = {
-        openWindow: "main",
-        theme: "light"
+        openWindow: "main"
       };
+
+      // Immediately invoked function to set the theme on initial load
+      (function () {
+        // if (localStorage.getItem('theme') === 'theme-dark') {
+        //     setTheme('theme-dark');
+        // } else {
+        //     setTheme('theme-light');
+        // }
+        switch (localStorage.getItem('theme')) {
+          case 'theme-light':
+            setTheme('theme-light');
+            break;
+          case 'theme-dark':
+            setTheme('theme-dark');
+            break;
+          case 'theme-notes':
+            setTheme('theme-notes');
+            break;
+          default:
+            setTheme('theme-light');
+        }
+      })();
 
       var settingsBtn = document.getElementById("upper-right");
       settingsBtn.addEventListener('click', toggleSettings);
@@ -35,11 +61,11 @@
         var target = document.getElementById("lower");
 
         if (appState.openWindow !== "settings") {
-          lower.innerHTML = "settings test";
+          showSettings();
           appState.openWindow = "settings";
           console.log(appState.openWindow);
         } else {
-          lower.innerHTML = '<textarea id="txt"></textarea>';
+          lower.innerHTML = '<textarea id="txt" spellcheck="false"></textarea>';
           textarea = document.getElementById("txt");
           textarea.addEventListener('input', writeLocalStorage);
           readLocalStorage();
@@ -50,6 +76,64 @@
       var textarea = document.getElementById("txt");
       textarea.addEventListener('input', writeLocalStorage);
 
+      function setTheme(themeName) {
+        console.log("TODO DELETE we're in setTheme");
+        localStorage.setItem('theme', themeName);
+        // TODO: maybe we need to specifically remove any current theme
+        // class names, but leave other class names?
+        // should be fine for now, but could be a problem later
+        // if stuff has other classes
+        document.documentElement.className = themeName;
+      }
+
+      
+      function changeTheme(event) {
+        switch (event.currentTarget.id) {
+          case "select-theme-light":
+            setTheme("theme-light");
+            break;
+          case "select-theme-dark":
+            setTheme("theme-dark");
+            break;
+          case "select-theme-notes":
+            setTheme("theme-notes");
+            break;
+        }
+      }
+
+
+      function showSettings() {
+        lower.innerHTML = "";
+
+        var themeList = document.createElement('ul');
+        var selectThemeLight = document.createElement('li');
+        selectThemeLight.innerText = "Light";
+        selectThemeLight.id = "select-theme-light";
+        var selectThemeDark = document.createElement('li');
+        selectThemeDark.innerText = "Dark";
+        selectThemeDark.id = "select-theme-dark";
+        var selectThemeNotes = document.createElement('li');
+        selectThemeNotes.innerText = "Notes";
+        selectThemeNotes.id = "select-theme-notes";
+
+        themeList.classList.add('menu-text');
+
+        // selectThemeLight.addEventListener('click', setTheme ("theme-light"));
+        // selectThemeDark.addEventListener('click', setTheme ("theme-dark"));
+        // selectThemeNotes.addEventListener('click', setTheme ("theme-notes"));
+        selectThemeLight.addEventListener('click', changeTheme);
+        selectThemeDark.addEventListener('click', changeTheme);
+        selectThemeNotes.addEventListener('click', changeTheme);
+
+        lower.appendChild(themeList);
+        themeList.appendChild(selectThemeLight);
+        themeList.appendChild(selectThemeDark);
+        themeList.appendChild(selectThemeNotes); 
+
+        console.log("finished showSettings()");
+      }
+
+
       function writeLocalStorage() {
         if (typeof(Storage) !== "undefined") {
             localStorage.setItem("text", textarea.value);
@@ -57,6 +141,7 @@
             document.getElementById("err").innerHTML = "Localstorage not supported";
         }
       }
+
 
       function readLocalStorage() {
         if (typeof(Storage) !== "undefined") {
@@ -66,13 +151,13 @@
         }
       }
 
+
       // `DOMContentLoaded` may fire before your script has a chance to run, so check before adding a listener
       if (document.readyState === "loading") {
           document.addEventListener("DOMContentLoaded", readLocalStorage);
       } else {  // `DOMContentLoaded` already fired
           readLocalStorage();
       }
-
       
     </script>
   </body>
