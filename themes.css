@@ -1,0 +1,20 @@
+.theme-light {
+  --color-primary: white;
+  --color-secondary: #DDDDDD;
+  --color-accent: black;
+  --font-color: black;
+}
+
+.theme-dark {
+  --color-primary: #333333;
+  --color-secondary: #555555;
+  --color-accent: #999999;
+  --font-color: #DDDDDD;
+}
+
+.theme-notes {
+  --color-primary: yellow;
+  --color-secondary: #CCCC00;
+  --color-accent: 	#666600;
+  --font-color: #333300;
+}
