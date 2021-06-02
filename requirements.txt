@@ -3,14 +3,27 @@ Ideas for future Goals
 [] time tracker (2-3 different things to track, change their names in settings, start and pause buttons, keep data of every day forever)
 [] Weather widget using OpenWeatherMap
 
-Version 4
-[] The Notes app should have a nicer menu (do some css?)
-[] The Notes app should have a place that links to my github (either in settings, or in a separate screen reached by clicking the top-left button?)
-[] The Notes app themes should also include the potential for font changes
-[] The skeuomorphic theme in the notes app should use a handwriting-style font (comic sans etc)
+Version 6 - More Style
+[] Menu items should give visual feedback on hover and click
+[] The title should have correct vertical alignment (does that mean numerically even, or something else?)
+[] The top left and top right buttons should have icons that indecate their functionality ('info i' / 'gear')
+[] The top menu navigation logic should be rethought
+  [] clicking the title - should it always return the user to the main window?
+
+Version 5 - Plumbing
+[] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)
+  [] for example `theme` could maybe be shared by apps? or not? need to decide
 [] The JS for the Notes app should go in an external file
 
-Version 3
+Version 4 - Settings & UI
+[x] The Notes app should have a nicer menu (do some css?)
+[x] Maybe the Settings should just be a hidden DIV and then we reveal it with JS?
+[x] The Notes app should allow the user to set the font size
+[] The Notes app should have a place that links to my github (either in settings, or in a separate screen reached by clicking the top-left button?)
+[x] The Notes app themes should also include the potential for font changes
+[x] The skeuomorphic theme in the notes app should use a handwriting-style font (comic sans etc)
+
+Version 3 - Themes
 [x] The notes app should have three themes, and the ability to toggle between them
   [x] Light mode (white background, black text)
   [x] Dark mode (TBD if this should be a black or dark grey background)
@@ -20,13 +33,13 @@ Version 3
   [x] 1. colors etc, used in every dockside app (to allow easy skinning)
   [x] 2. things specific to the components of the Notes app
 
-Version 2
+Version 2 - Style
 [x] The notes app should have a button that toggles between showing the text field 
    and a (empty for now except some placeholder text) settings/info page
 [x] The notes app should have 'branding' in the top middle area
 [x] The textbox in the notes app should default to a nice monospace font and fallback to default monospace
 
-Version 1
+Version 1 - MVP
 [x] The landing page should have a link to open the notes app in a small window
 [x] The landing page should have a link to open the notes app in a large window (for testing)
 [x] The notes app should have a header bar that takes up 25px of vertical space

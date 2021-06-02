@@ -3,6 +3,8 @@
   --color-secondary: #DDDDDD;
   --color-accent: black;
   --font-color: black;
+  --font-family: 'Courier Prime', monospace;
+  --line-height: normal;
 }
 
 .theme-dark {
@@ -10,11 +12,15 @@
   --color-secondary: #555555;
   --color-accent: #888888;
   --font-color: #BBBBBB;
+  --font-family: 'Courier Prime', monospace;
+  --line-height: normal;
 }
 
-.theme-notes {
+.theme-yellow {
   --color-primary: yellow;
   --color-secondary: #CCCC00;
   --color-accent: 	#666600;
   --font-color: #333300;
+  --font-family: 'Gloria Hallelujah', cursive;
+  --line-height: 1.1;
 }

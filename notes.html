@@ -25,33 +25,33 @@
         </div>
       </div>
       <div id="lower">
-        <textarea id="txt" spellcheck="false" style="display: none"></textarea>
-        <div id="settings" style="display: null">
+        <textarea id="txt" spellcheck="false" style="display: inline"></textarea>
+        <div id="settings" style="display: none">
           <div id="settings-left">
             <p class="settings-header">Theme</p>
-            <div class="settings-item">light</div>
-            <div class="settings-item">dark</div>
-            <div class="settings-item">yellow</div>
+            <div class="settings-item" id="select-theme-light">light</div>
+            <div class="settings-item" id="select-theme-dark">dark</div>
+            <div class="settings-item" id="select-theme-yellow">yellow</div>
           </div>
           <div id="settings-right">
             <p class="settings-header">Font Size</p>
             <div id="settings-right-items">
-              <div class="settings-item si-right">
+              <div class="settings-item si-right" id="select-fontsize-8">
                 <p>8</p>
               </div>
-              <div class="settings-item si-right">
+              <div class="settings-item si-right" id="select-fontsize-10">
                 <p>10</p>
               </div>
-              <div class="settings-item si-right">
+              <div class="settings-item si-right" id="select-fontsize-12">
                 <p>12</p>
               </div>
-              <div class="settings-item si-right">
+              <div class="settings-item si-right" id="select-fontsize-14">
                 <p>14</p>
               </div>
-              <div class="settings-item si-right">
+              <div class="settings-item si-right" id="select-fontsize-18">
                 <p>18</p>
               </div>
-              <div class="settings-item si-right">
+              <div class="settings-item si-right" id="select-fontsize-24">
                 <p>24</p>
               </div>
             </div>
@@ -64,13 +64,8 @@
         openWindow: "main"
       };
 
-      // Immediately invoked function to set the theme on initial load
+      // Immediately invoked function to set visual state (theme, font size) on initial load
       (function () {
-        // if (localStorage.getItem('theme') === 'theme-dark') {
-        //     setTheme('theme-dark');
-        // } else {
-        //     setTheme('theme-light');
-        // }
         switch (localStorage.getItem('theme')) {
           case 'theme-light':
             setTheme('theme-light');
@@ -78,49 +73,55 @@
           case 'theme-dark':
             setTheme('theme-dark');
             break;
-          case 'theme-notes':
-            setTheme('theme-notes');
+          case 'theme-yellow':
+            setTheme('theme-yellow');
             break;
           default:
             setTheme('theme-light');
         }
+        // textarea.value = localStorage.getItem("text");
+        document.getElementById('txt').style.fontSize = localStorage.getItem("font-size");
       })();
 
       var settingsBtn = document.getElementById("upper-right");
       settingsBtn.addEventListener('click', toggleSettings);
 
+      var textarea = document.getElementById("txt");
+      textarea.addEventListener('input', writeLocalStorage);
+
+
       function toggleSettings() {
         var target = document.getElementById("lower");
 
         if (appState.openWindow !== "settings") {
-          showSettings();
-          // set other div style to display: none
-          // set settings div style do display: null
+          document.getElementById('txt').style.display = 'none';
+          document.getElementById('settings').style.display = 'flex'
           appState.openWindow = "settings";
-          console.log(appState.openWindow);
         } else {
-          lower.innerHTML = '<textarea id="txt" spellcheck="false"></textarea>';
-          // set other div style to display: none
-          // set settings div style to display: null
-          textarea = document.getElementById("txt");
-          textarea.addEventListener('input', writeLocalStorage);
-          readLocalStorage();
+          document.getElementById('settings').style.display = 'none';
+          document.getElementById('txt').style.display = 'inline';
           appState.openWindow = "main";
         }
       }
-      
-      var textarea = document.getElementById("txt");
-      textarea.addEventListener('input', writeLocalStorage);
+
+
+      document.getElementById('select-theme-light').addEventListener('click', changeTheme);
+      document.getElementById('select-theme-dark').addEventListener('click', changeTheme);
+      document.getElementById('select-theme-yellow').addEventListener('click', changeTheme);
+
+      document.getElementById('select-fontsize-8').addEventListener('click', changeFontSize);
+      document.getElementById('select-fontsize-10').addEventListener('click', changeFontSize);
+      document.getElementById('select-fontsize-12').addEventListener('click', changeFontSize);
+      document.getElementById('select-fontsize-14').addEventListener('click', changeFontSize);
+      document.getElementById('select-fontsize-18').addEventListener('click', changeFontSize);
+      document.getElementById('select-fontsize-24').addEventListener('click', changeFontSize);
+    
 
       function setTheme(themeName) {
-        console.log("TODO DELETE we're in setTheme");
         localStorage.setItem('theme', themeName);
-        // TODO: maybe we need to specifically remove any current theme
-        // class names, but leave other class names?
-        // should be fine for now, but could be a problem later
-        // if stuff has other classes
-        // document.documentElement.className = themeName;
-        document.documentElement.classList.remove("theme-light", "theme-dark", "theme-notes");
+        // TODO instead of manually listing the themes, maybe put them all in an array or something somewhere
+        // and then do it automatically
+        document.documentElement.classList.remove("theme-light", "theme-dark", "theme-yellow");
         document.documentElement.classList.add(themeName);
       }
 
@@ -133,42 +134,17 @@
           case "select-theme-dark":
             setTheme("theme-dark");
             break;
-          case "select-theme-notes":
-            setTheme("theme-notes");
+          case "select-theme-yellow":
+            setTheme("theme-yellow");
             break;
         }
       }
 
 
-      function showSettings() {
-        lower.innerHTML = "";
-
-        var themeList = document.createElement('ul');
-        var selectThemeLight = document.createElement('li');
-        selectThemeLight.innerText = "Light";
-        selectThemeLight.id = "select-theme-light";
-        var selectThemeDark = document.createElement('li');
-        selectThemeDark.innerText = "Dark";
-        selectThemeDark.id = "select-theme-dark";
-        var selectThemeNotes = document.createElement('li');
-        selectThemeNotes.innerText = "Notes";
-        selectThemeNotes.id = "select-theme-notes";
-
-        themeList.classList.add('menu-text');
-
-        // selectThemeLight.addEventListener('click', setTheme ("theme-light"));
-        // selectThemeDark.addEventListener('click', setTheme ("theme-dark"));
-        // selectThemeNotes.addEventListener('click', setTheme ("theme-notes"));
-        selectThemeLight.addEventListener('click', changeTheme);
-        selectThemeDark.addEventListener('click', changeTheme);
-        selectThemeNotes.addEventListener('click', changeTheme);
-
-        lower.appendChild(themeList);
-        themeList.appendChild(selectThemeLight);
-        themeList.appendChild(selectThemeDark);
-        themeList.appendChild(selectThemeNotes); 
-
-        console.log("finished showSettings()");
+      function changeFontSize(event) {
+        var fontSize = event.currentTarget.id.split('-')[2];
+        localStorage.setItem("font-size", fontSize);
+        document.getElementById('txt').style.fontSize = fontSize;
       }
 
 
