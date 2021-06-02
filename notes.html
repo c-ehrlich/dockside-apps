@@ -57,6 +57,9 @@
             </div>
           </div>
         </div>
+        <div id="info" style="display: none">
+          Dockside Apps - 2021 - www.github.com/c-ehrlich
+        </div>
       </div>
     </div>
     <script>
@@ -83,22 +86,45 @@
         document.getElementById('txt').style.fontSize = localStorage.getItem("font-size");
       })();
 
-      var settingsBtn = document.getElementById("upper-right");
-      settingsBtn.addEventListener('click', toggleSettings);
+      document.getElementById('upper-left').addEventListener('click', toggleInfo);
+      document.getElementById("upper-right").addEventListener('click', toggleSettings);
+      document.getElementById("upper-middle").addEventListener('click', function() {
+        document.getElementById('settings').style.display = 'none';
+        document.getElementById('info').style.display = 'none';
+        document.getElementById('txt').style.display = 'inline';
+        appState.openWindow = "main";
+      });
 
+      // leaving this as a variable declaration for now because it's used in some other places
+      // TODO change that so this can be a single line
       var textarea = document.getElementById("txt");
       textarea.addEventListener('input', writeLocalStorage);
 
 
       function toggleSettings() {
-        var target = document.getElementById("lower");
-
         if (appState.openWindow !== "settings") {
           document.getElementById('txt').style.display = 'none';
+          document.getElementById('info').style.display = 'none';
           document.getElementById('settings').style.display = 'flex'
           appState.openWindow = "settings";
         } else {
           document.getElementById('settings').style.display = 'none';
+          document.getElementById('info').style.display = 'none';
+          document.getElementById('txt').style.display = 'inline';
+          appState.openWindow = "main";
+        }
+      }
+
+
+      function toggleInfo() {
+        if (appState.openWindow !== "info") {
+          document.getElementById('txt').style.display = 'none';
+          document.getElementById('settings').style.display = 'none';
+          document.getElementById('info').style.display = 'inline'
+          appState.openWindow = "info";
+        } else {
+          document.getElementById('settings').style.display = 'none';
+          document.getElementById('info').style.display = 'none';
           document.getElementById('txt').style.display = 'inline';
           appState.openWindow = "main";
         }

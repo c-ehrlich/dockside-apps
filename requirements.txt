@@ -7,21 +7,22 @@ Version 6 - More Style
 [] Menu items should give visual feedback on hover and click
 [] The title should have correct vertical alignment (does that mean numerically even, or something else?)
 [] The top left and top right buttons should have icons that indecate their functionality ('info i' / 'gear')
-[] The top menu navigation logic should be rethought
-  [] clicking the title - should it always return the user to the main window?
+
 
 Version 5 - Plumbing
 [] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)
   [] for example `theme` could maybe be shared by apps? or not? need to decide
-[] The JS for the Notes app should go in an external file
+[] The JS for the Notes app should go in an external file (or multiple files?)
 
 Version 4 - Settings & UI
 [x] The Notes app should have a nicer menu (do some css?)
 [x] Maybe the Settings should just be a hidden DIV and then we reveal it with JS?
 [x] The Notes app should allow the user to set the font size
-[] The Notes app should have a place that links to my github (either in settings, or in a separate screen reached by clicking the top-left button?)
+[x] The Notes app should have a place that links to my github (in a separate screen reached by clicking the top-left button?)
 [x] The Notes app themes should also include the potential for font changes
 [x] The skeuomorphic theme in the notes app should use a handwriting-style font (comic sans etc)
+[x] The top menu navigation logic should be rethought
+  [x] clicking the title should always return the user to the main window
 
 Version 3 - Themes
 [x] The notes app should have three themes, and the ability to toggle between them

@@ -72,3 +72,10 @@ body {
   font-weight: 400;
   color: var(--font-color);
 }
+
+#info {
+  font-family: 'Courier Prime', monospace;
+  font-weight: 700;
+  font-size: 10pt;
+  color: var(--font-color);
+}
