@@ -8,8 +8,8 @@
 .theme-dark {
   --color-primary: #333333;
   --color-secondary: #555555;
-  --color-accent: #999999;
-  --font-color: #DDDDDD;
+  --color-accent: #888888;
+  --font-color: #BBBBBB;
 }
 
 .theme-notes {

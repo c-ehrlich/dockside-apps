@@ -1,11 +1,14 @@
 Ideas for future Goals
 [] The notes app should default to dark or light mode depending on system UI
 [] time tracker (2-3 different things to track, change their names in settings, start and pause buttons, keep data of every day forever)
+[] Weather widget using OpenWeatherMap
 
 Version 4
 [] The Notes app should have a nicer menu (do some css?)
 [] The Notes app should have a place that links to my github (either in settings, or in a separate screen reached by clicking the top-left button?)
-[] The Notes app themes should also include the potential for font changes (handwriting-like font in yellow notes?)
+[] The Notes app themes should also include the potential for font changes
+[] The skeuomorphic theme in the notes app should use a handwriting-style font (comic sans etc)
+[] The JS for the Notes app should go in an external file
 
 Version 3
 [x] The notes app should have three themes, and the ability to toggle between them

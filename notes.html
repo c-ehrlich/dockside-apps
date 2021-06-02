@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <Title>Dockside Notes</Title>
+    <Title>DS Notes</Title>
 
     <link rel="stylesheet" href="themes.css">
     <link rel="stylesheet" href="notes.css">
+    <link rel="stylesheet" href="settings.css">
 
   </head>
   <body>
@@ -24,7 +25,38 @@
         </div>
       </div>
       <div id="lower">
-        <textarea id="txt" spellcheck="false"></textarea>
+        <textarea id="txt" spellcheck="false" style="display: none"></textarea>
+        <div id="settings" style="display: null">
+          <div id="settings-left">
+            <p class="settings-header">Theme</p>
+            <div class="settings-item">light</div>
+            <div class="settings-item">dark</div>
+            <div class="settings-item">yellow</div>
+          </div>
+          <div id="settings-right">
+            <p class="settings-header">Font Size</p>
+            <div id="settings-right-items">
+              <div class="settings-item si-right">
+                <p>8</p>
+              </div>
+              <div class="settings-item si-right">
+                <p>10</p>
+              </div>
+              <div class="settings-item si-right">
+                <p>12</p>
+              </div>
+              <div class="settings-item si-right">
+                <p>14</p>
+              </div>
+              <div class="settings-item si-right">
+                <p>18</p>
+              </div>
+              <div class="settings-item si-right">
+                <p>24</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script>
@@ -62,10 +94,14 @@
 
         if (appState.openWindow !== "settings") {
           showSettings();
+          // set other div style to display: none
+          // set settings div style do display: null
           appState.openWindow = "settings";
           console.log(appState.openWindow);
         } else {
           lower.innerHTML = '<textarea id="txt" spellcheck="false"></textarea>';
+          // set other div style to display: none
+          // set settings div style to display: null
           textarea = document.getElementById("txt");
           textarea.addEventListener('input', writeLocalStorage);
           readLocalStorage();
@@ -83,10 +119,12 @@
         // class names, but leave other class names?
         // should be fine for now, but could be a problem later
         // if stuff has other classes
-        document.documentElement.className = themeName;
+        // document.documentElement.className = themeName;
+        document.documentElement.classList.remove("theme-light", "theme-dark", "theme-notes");
+        document.documentElement.classList.add(themeName);
       }
 
-      
+
       function changeTheme(event) {
         switch (event.currentTarget.id) {
           case "select-theme-light":
