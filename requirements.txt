@@ -5,7 +5,7 @@ Ideas for future Goals
 [] Weather widget using OpenWeatherMap
 
 Version 6 - More Style
-[] Menu items should give visual feedback on hover and click
+[x] Menu items should give visual feedback on hover and click
 [] The title should have correct vertical alignment (does that mean numerically even, or something else?)
 [] The top left and top right buttons should have icons that indecate their functionality ('info i' / 'gear')
 

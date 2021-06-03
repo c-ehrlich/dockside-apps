@@ -34,6 +34,7 @@ html, body {
   flex: 0 0 25px;
   background-color: var(--color-secondary);
   color: var(--font-color);
+  cursor: pointer;
 }
 #upper-middle {
   flex: 1 1 auto;
@@ -41,11 +42,21 @@ html, body {
   flex-direction: column;
   align-content: flex-end;
   background-color: var(--color-primary);
+  cursor: pointer;
 }
 #upper-right {
   flex: 0 0 25px;
   background-color: var(--color-secondary);
   color: var(--font-color);
+  cursor: pointer;
+}
+
+#upper-left:hover,
+#upper-right:hover {
+  background-color: var(--color-accent);
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
 }
 
 #txt {
@@ -79,4 +90,75 @@ html, body {
   font-weight: 700;
   font-size: 10pt;
   color: var(--font-color);
+}
+
+
+/**
+ * +----------------+
+ * |    SETTINGS    |
+ * +----------------+ 
+ */
+
+#settings {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+#settings-left, #settings-right {
+  width: 50%;
+}
+
+#settings-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#settings-right {
+  border-left: 1px solid var(--color-accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#settings-right-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.settings-header {
+  font-family: 'Courier Prime', monospace;
+  font-weight: 700;
+  font-size: 10pt;
+  margin: 4pt 0 0 0;
+  padding: 0;
+  align-self: center;
+  color: var(--font-color);
+}
+
+.settings-item {
+  font-family: 'Courier Prime', monospace;
+  font-weight: 400;
+  font-size: 10pt;
+  margin: 0;
+  padding: 0;
+  color: var(--font-color);
+  cursor: pointer;
+}
+
+.si-right {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  justify-self: center;
 }
