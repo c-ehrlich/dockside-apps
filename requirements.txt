@@ -10,10 +10,9 @@ Version 6 - More Style
 [] The top left and top right buttons should have icons that indecate their functionality ('info i' / 'gear')
 
 Version 5 - Plumbing
-[] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)
-  [] for example `theme` could maybe be shared by apps? or not? need to decide
-[] The JS for the Notes app should go in an external file (or multiple files?)
-[] Clean up the CSS (maybe there should be one less file?)
+[x] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)
+[x] The JS for the Notes app should go in an external file (or multiple files?)
+[x] Clean up the CSS (maybe there should be one less file?)
 
 Version 4 - Settings & UI
 [x] The Notes app should have a nicer menu (do some css?)
@@ -26,7 +25,7 @@ Version 4 - Settings & UI
   [x] clicking the title should always return the user to the main window
 (!) [x] Fix an ussue where the lower content does not take up the entire vertical height of the page
 
-Version 3 - Themes
+Version 3 - Themes 
 [x] The notes app should have three themes, and the ability to toggle between them
   [x] Light mode (white background, black text)
   [x] Dark mode (TBD if this should be a black or dark grey background)
