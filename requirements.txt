@@ -1,6 +1,7 @@
 Ideas for future Goals
 [] The notes app should default to dark or light mode depending on system UI
 [] time tracker (2-3 different things to track, change their names in settings, start and pause buttons, keep data of every day forever)
+[] Pomodoro app
 [] Weather widget using OpenWeatherMap
 
 Version 6 - More Style
@@ -8,11 +9,11 @@ Version 6 - More Style
 [] The title should have correct vertical alignment (does that mean numerically even, or something else?)
 [] The top left and top right buttons should have icons that indecate their functionality ('info i' / 'gear')
 
-
 Version 5 - Plumbing
 [] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)
   [] for example `theme` could maybe be shared by apps? or not? need to decide
 [] The JS for the Notes app should go in an external file (or multiple files?)
+[] Clean up the CSS (maybe there should be one less file?)
 
 Version 4 - Settings & UI
 [x] The Notes app should have a nicer menu (do some css?)
@@ -23,6 +24,7 @@ Version 4 - Settings & UI
 [x] The skeuomorphic theme in the notes app should use a handwriting-style font (comic sans etc)
 [x] The top menu navigation logic should be rethought
   [x] clicking the title should always return the user to the main window
+(!) [] Fix an ussue where the lower content does not take up the entire vertical height of the page
 
 Version 3 - Themes
 [x] The notes app should have three themes, and the ability to toggle between them
