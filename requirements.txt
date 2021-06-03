@@ -24,7 +24,7 @@ Version 4 - Settings & UI
 [x] The skeuomorphic theme in the notes app should use a handwriting-style font (comic sans etc)
 [x] The top menu navigation logic should be rethought
   [x] clicking the title should always return the user to the main window
-(!) [] Fix an ussue where the lower content does not take up the entire vertical height of the page
+(!) [x] Fix an ussue where the lower content does not take up the entire vertical height of the page
 
 Version 3 - Themes
 [x] The notes app should have three themes, and the ability to toggle between them

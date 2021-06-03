@@ -9,9 +9,10 @@
 --color-accent: 	#666600;
 --font-color: #333300; */
 
-body {
+html, body {
   padding: 0;
   margin: 0;
+  height: 100%
 }
 #container {
   display: flex;
