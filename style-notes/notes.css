@@ -36,22 +36,22 @@ html, body {
   background-color: var(--color-primary);
 }
 
-#upper-left {
-  flex: 0 0 25px;
-  background-color: var(--color-secondary);
-  color: var(--font-color);
-  cursor: pointer;
-}
 #upper-middle {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  align-content: flex-end;
+  align-items: center;
+  justify-content: center;
   background-color: var(--color-primary);
   cursor: pointer;
 }
+
+#upper-left,
 #upper-right {
+  display: flex;
   flex: 0 0 25px;
+  align-items: center;
+  justify-content: center;;
   background-color: var(--color-secondary);
   color: var(--font-color);
   cursor: pointer;
@@ -63,6 +63,12 @@ html, body {
   -webkit-transition: background-color 200ms linear;
   -ms-transition: background-color 200ms linear;
   transition: background-color 200ms linear;
+}
+
+.header-menu-item {
+  filter: var(--icon-filter);
+  width: 20px;
+  height: 20px;
 }
 
 #txt {
