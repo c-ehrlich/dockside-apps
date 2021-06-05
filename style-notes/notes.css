@@ -174,3 +174,7 @@ p {
   align-content: center;
   justify-self: center;
 }
+
+#info a {
+  color: var(--font-color);
+}
