@@ -16,8 +16,11 @@ Version 6 - More Style
 [x] fix light theme so that hover color is no longer equal to text color
 [x] Fix a bug where the text field is a bit wider than the window (maybe related to border margin etc?)
 [x] Fix a bug where the text field doesnt automatically resize with the window
-[] The github link in the info panel should be a real link
-[] The notes app should inform the user about the limitations of localstorage on the info page 
+[x] The github link in the info panel should be a real link
+[x] The notes app should inform the user about the limitations of localstorage on the info page 
+[] ISSUE: font size menu items broke
+[] ISSUE: link text is almost invisible in dark theme.
+  [] Maybe make a elements a color that is similar to but not the same as regular text color? as a var...
 
 Version 5 - Plumbing
 [x] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)

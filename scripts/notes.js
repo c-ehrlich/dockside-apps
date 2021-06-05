@@ -103,9 +103,12 @@ function changeTheme(event) {
 
 
 function changeFontSize(event) {
-  var fontSize = event.currentTarget.id.split('-')[2];
-  localStorage.setItem("ds-notes-font-size", fontSize);
-  document.getElementById('txt').style.fontSize = fontSize;
+  var newFontSize = event.currentTarget.id.split('-')[2] + "px";
+  localStorage.setItem("ds-notes-font-size", newFontSize);
+  // document.getElementById('txt').style.fontSize = fontSize;
+  document.getElementById('txt').style.fontSize = newFontSize;
+  console.log(document.getElementById('txt'));
+  console.log(document.getElementById('txt').style);
 }
 
 
