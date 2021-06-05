@@ -11,10 +11,10 @@ Version 7 - Use SASS
 Version 6 - More Style
 [x] Menu items should give visual feedback on hover and click
 [] The title should have correct vertical alignment (does that mean numerically even, or something else?)
-[] The top left and top right buttons should have icons that indecate their functionality ('info i' / 'gear')
+[] The top left and top right buttons should have icons that indicate their functionality ('info i' / 'gear')
 [] fix light theme so that hover color is no longer equal to text color
-[] Fix a bug where the text field is a bit wider than the window (maybe related to border margin etc?)
-[] Fix a bug where the text field doesnt automatically resize with the window
+[x] Fix a bug where the text field is a bit wider than the window (maybe related to border margin etc?)
+[x] Fix a bug where the text field doesnt automatically resize with the window
 
 Version 5 - Plumbing
 [x] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)

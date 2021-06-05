@@ -9,6 +9,12 @@
 --color-accent: 	#666600;
 --font-color: #333300; */
 
+.boxsizingBorder {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 html, body {
   padding: 0;
   margin: 0;
