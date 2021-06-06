@@ -4,6 +4,27 @@ Ideas for future Goals
 [] Pomodoro app
 [] Weather widget using OpenWeatherMap
 
+Version 11 - Failure
+[] The app should display something (modal?) if the API request fails
+
+Version 10 - Refresh
+[] The weather app should automatically make a renewed API request and update its views with that data, every 10 minutes
+[] The time of the last request and next request should be shown on the settings screen
+
+Version 9 - Layout
+[] Should have a basic layout for the three screens (now, hours, days)
+
+Version 8 - Weather App v1
+[] Right from the start all the weather related functions that dont deal with UI should be a file of their own
+[] The weather app should make an API call when it is launched, and store that in an update
+[] The weather app should save the time it made that call to a variable (global?) and display it in the console
+[] The weather app should show, in any kind of crude format, the following data:
+  [] Current temperature & Humidity
+  [] Hourly temperature for the next 5 (?) hours
+  [] Daily temperature (day & night?) for the next 5 days
+[] The weather app should (in plain text for now) show something that represents the condition
+  [] Sun, Clouds, Rain, Snow,... 
+
 Version 7 - Conventions
 [] file/folder naming conventions should be followed (research these!)
 [] JS should be broken into multiple files to make parts reusable
@@ -18,9 +39,8 @@ Version 6 - More Style
 [x] Fix a bug where the text field doesnt automatically resize with the window
 [x] The github link in the info panel should be a real link
 [x] The notes app should inform the user about the limitations of localstorage on the info page 
-[] ISSUE: font size menu items broke
-[] ISSUE: link text is almost invisible in dark theme.
-  [] Maybe make a elements a color that is similar to but not the same as regular text color? as a var...
+[x] ISSUE: font size menu items broke
+[x] ISSUE: link text is almost invisible in dark theme.
 
 Version 5 - Plumbing
 [x] Any localstorage variables should have unique names to prevent namespaces collisions (unless I want those!)
