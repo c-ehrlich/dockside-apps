@@ -1,7 +1,11 @@
-# Dockside Tools
+# Dockside Apps
+
+![Dockside Apps Screenshot 1](https://i.imgur.com/0S02Ssn.png)
+![Dockside Apps Screenshot 2](https://i.imgur.com/fbBLpUA.jpg)
+![Dockside Apps Screenshot 3](https://i.imgur.com/5q7EOgL.png)
 
 ## What is it?
-Dockside tools is a suite of tiny tools, designed to be run in the empty space to the left and right of the MacOS dock. Everything is built in very simple HTML/CSS/JS without external libraries. All apps use local storage to prevent data loss.
+Dockside apps is a suite of tiny tools, designed to be run in the empty space to the left and right of the MacOS dock. Everything is built in very simple HTML/CSS/JS without external libraries. All apps use local storage to prevent data loss.
 
 ## Available Apps
 * Notes
