@@ -4,24 +4,14 @@
 var appState = {
     openWindow: "main"
 };
-// Immediately invoked function to set visual state (theme, font size) on initial load
-(function () {
-    switch (localStorage.getItem('ds-notes-theme')) {
-        case 'theme-light':
-            setTheme('theme-light');
-            break;
-        case 'theme-dark':
-            setTheme('theme-dark');
-            break;
-        case 'theme-yellow':
-            setTheme('theme-yellow');
-            break;
-        default:
-            setTheme('theme-light');
-    }
-    // textarea.value = localStorage.getItem("text");
+// `DOMContentLoaded` may fire before the script has a chance to run, so check before adding a listener
+document.readyState === 'loading' ? document.addEventListener("DOMContentLoaded", init) : init();
+function init() {
+    readLocalStorage();
+    let theme = localStorage.getItem('ds-notes-theme');
+    setTheme(theme);
     document.querySelector('#txt').style.fontSize = localStorage.getItem("ds-notes-font-size");
-})();
+}
 const textarea = document.querySelector('#txt');
 const info = document.querySelector('#info');
 const settings = document.querySelector('#settings');
@@ -32,6 +22,28 @@ document.querySelector('#upper-middle').addEventListener('click', openTextarea);
 document.querySelectorAll('.si-fontsize').forEach(item => {
     item.addEventListener('click', changeFontSize);
 });
+document.querySelectorAll('.settings-item-theme').forEach(item => {
+    item.addEventListener('click', changeTheme);
+});
+function writeLocalStorage() {
+    if (typeof (Storage) !== "undefined") {
+        localStorage.setItem("ds-notes-text", textarea.value);
+    }
+    else {
+        document.getElementById("err").innerHTML = "Localstorage not supported";
+    }
+}
+function readLocalStorage() {
+    if (typeof (Storage) !== "undefined") {
+        textarea.value = localStorage.getItem("ds-notes-text");
+    }
+    else {
+        document.getElementById("err").innerHTML = "Localstorage not supported";
+    }
+}
+/*
+* Helper Functions
+*/
 function changeTheme(e) {
     switch (e.currentTarget.id) {
         case "select-theme-light":
@@ -55,35 +67,9 @@ function changeFontSize(e) {
     localStorage.setItem("ds-notes-font-size", newFontSize);
     document.getElementById('txt').style.fontSize = newFontSize;
 }
-function writeLocalStorage() {
-    if (typeof (Storage) !== "undefined") {
-        localStorage.setItem("ds-notes-text", textarea.value);
-    }
-    else {
-        document.getElementById("err").innerHTML = "Localstorage not supported";
-    }
-}
-function readLocalStorage() {
-    if (typeof (Storage) !== "undefined") {
-        textarea.value = localStorage.getItem("ds-notes-text");
-    }
-    else {
-        document.getElementById("err").innerHTML = "Localstorage not supported";
-    }
-}
-// `DOMContentLoaded` may fire before your script has a chance to run, so check before adding a listener
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", readLocalStorage);
-}
-else { // `DOMContentLoaded` already fired
-    readLocalStorage();
-}
 /*
-* UI Stuff
+* UI Navigation
 */
-document.querySelectorAll('.settings-item-theme').forEach(item => {
-    item.addEventListener('click', changeTheme);
-});
 function toggleInfo() {
     appState.openWindow !== 'info' ? openInfo() : openTextarea();
 }
