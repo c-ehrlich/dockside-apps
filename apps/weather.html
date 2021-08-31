@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <Title>DS Weather</Title>
+
+    <link rel="stylesheet" href="../styles/base.css">
+    <link rel="stylesheet" href="../styles/themes.css">
+    <link rel="stylesheet" href="../styles/weather.css">
+
+  </head>
+  <body class="theme-light">
+    <div id="container">
+      <div id="upper">
+        <div id="upper-left">
+          <img src="../img/info.svg" alt="info" class="header-menu-item"/>
+        </div>
+        <div id="upper-middle">
+          <p class="header-text">Weather</p>
+        </div>
+        <div id="upper-right">
+          <img src="../img/settings.svg" alt="settings" class="header-menu-item"/>
+        </div>
+      </div>
+      <div id="lower">
+        <div id="weather" style="display: inline"></div>
+          <div id="mode-select">
+            <div class="mode-select-item" id="mode-now">Now</div>
+            <div class="mode-select-item" id="mode-today">Today</div>
+            <div class="mode-select-item" id="mode-week">Week</div>
+          </div>
+          <div id="weather-display">
+            <div id="weather-display-now">
+              <img src="../img/weather/10d@2x.png">
+            </div>
+            <div id="weather-display-today">
+
+            </div>
+            <div id="weather-display-week">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../scripts/weather.js"></script>
+
+  </body>
+<html>

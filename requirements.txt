@@ -3,6 +3,7 @@ Ideas for future Goals
 [] time tracker (2-3 different things to track, change their names in settings, start and pause buttons, keep data of every day forever)
 [] Pomodoro app
 [] Weather widget using OpenWeatherMap
+[] One More App?
 
 Version 11 - Failure
 [] The app should display something (modal?) if the API request fails

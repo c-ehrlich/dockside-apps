@@ -1,0 +1,86 @@
+/* * { border: 1px solid purple; } */
+
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+
+/* THEME COLOR NAMES
+--color-primary: yellow;
+--color-secondary: #CCCC00;
+--color-accent: 	#666600;
+--font-color: #333300; */
+
+.boxsizingBorder {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%
+}
+#container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#upper {
+  flex: 0 0 25px;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--color-accent);
+}
+#lower {
+  flex: 1 1 auto;
+  background-color: var(--color-primary);
+}
+
+#upper-middle {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  cursor: pointer;
+}
+
+#upper-left,
+#upper-right {
+  display: flex;
+  flex: 0 0 25px;
+  align-items: center;
+  justify-content: center;;
+  background-color: var(--color-secondary);
+  color: var(--font-color);
+  cursor: pointer;
+}
+
+#upper-left:hover,
+#upper-right:hover {
+  background-color: var(--color-accent);
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
+}
+
+.header-menu-item {
+  filter: var(--icon-filter);
+  width: 20px;
+  height: 20px;
+}
+
+.header-text {
+  margin: 0;
+  text-align: center;
+  font-family: 'Courier Prime', monospace;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.menu-text {
+  font-family: 'Courier Prime', monospace;
+  font-weight: 400;
+  color: var(--font-color);
+}
