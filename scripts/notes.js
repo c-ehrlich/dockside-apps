@@ -1,21 +1,21 @@
 "use strict";
 // TODO
 // use attrs instead of clunky class names to set properties
-var appState = {
+var notesAppState = {
     openWindow: "main"
 };
 // `DOMContentLoaded` may fire before the script has a chance to run, so check before adding a listener
-document.readyState === 'loading' ? document.addEventListener("DOMContentLoaded", init) : init();
-function init() {
-    readLocalStorage();
+document.readyState === 'loading' ? document.addEventListener("DOMContentLoaded", initNotes) : initNotes();
+function initNotes() {
+    readLocalStorageNotes();
     let theme = localStorage.getItem('ds-notes-theme');
-    setTheme(theme);
+    setTheme(theme); //TODO why is this semicolon necessary?
     document.querySelector('#txt').style.fontSize = localStorage.getItem("ds-notes-font-size");
 }
 const textarea = document.querySelector('#txt');
 const info = document.querySelector('#info');
 const settings = document.querySelector('#settings');
-textarea.addEventListener('input', writeLocalStorage);
+textarea.addEventListener('input', writeLocalStorageNotes);
 document.querySelector('#upper-left').addEventListener('click', toggleInfo);
 document.querySelector('#upper-right').addEventListener('click', toggleSettings);
 document.querySelector('#upper-middle').addEventListener('click', openTextarea);
@@ -25,20 +25,20 @@ document.querySelectorAll('.si-fontsize').forEach(item => {
 document.querySelectorAll('.settings-item-theme').forEach(item => {
     item.addEventListener('click', changeTheme);
 });
-function writeLocalStorage() {
+function writeLocalStorageNotes() {
     if (typeof (Storage) !== "undefined") {
         localStorage.setItem("ds-notes-text", textarea.value);
     }
     else {
-        document.getElementById("err").innerHTML = "Localstorage not supported";
+        displayError('LocalStorage not supported');
     }
 }
-function readLocalStorage() {
+function readLocalStorageNotes() {
     if (typeof (Storage) !== "undefined") {
         textarea.value = localStorage.getItem("ds-notes-text");
     }
     else {
-        document.getElementById("err").innerHTML = "Localstorage not supported";
+        displayError('LocalStorage not supported');
     }
 }
 /*
@@ -65,32 +65,32 @@ function setTheme(themeName) {
 function changeFontSize(e) {
     let newFontSize = e.currentTarget.id.split('-')[2] + "px";
     localStorage.setItem("ds-notes-font-size", newFontSize);
-    document.getElementById('txt').style.fontSize = newFontSize;
+    document.querySelector('#txt').style.fontSize = newFontSize;
 }
 /*
 * UI Navigation
 */
 function toggleInfo() {
-    appState.openWindow !== 'info' ? openInfo() : openTextarea();
+    notesAppState.openWindow !== 'info' ? openInfo() : openTextarea();
 }
 function toggleSettings() {
-    appState.openWindow !== 'settings' ? openSettings() : openTextarea();
+    notesAppState.openWindow !== 'settings' ? openSettings() : openTextarea();
 }
 function openSettings() {
     textarea.style.display = 'none';
     info.style.display = 'none';
     settings.style.display = 'flex';
-    appState.openWindow = 'settings';
+    notesAppState.openWindow = 'settings';
 }
 function openTextarea() {
     settings.style.display = 'none';
     info.style.display = 'none';
     textarea.style.display = 'inline';
-    appState.openWindow = 'main';
+    notesAppState.openWindow = 'main';
 }
 function openInfo() {
     textarea.style.display = 'none';
     settings.style.display = 'none';
     info.style.display = 'inline';
-    appState.openWindow = "info";
+    notesAppState.openWindow = "info";
 }

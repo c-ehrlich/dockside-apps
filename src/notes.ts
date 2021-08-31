@@ -1,17 +1,17 @@
 // TODO
 // use attrs instead of clunky class names to set properties
 
-var appState = {
+var notesAppState = {
   openWindow: "main"
 }
 
 
 // `DOMContentLoaded` may fire before the script has a chance to run, so check before adding a listener
-document.readyState === 'loading' ? document.addEventListener("DOMContentLoaded", init) : init()
+document.readyState === 'loading' ? document.addEventListener("DOMContentLoaded", initNotes) : initNotes()
 
 
-function init(): void {
-  readLocalStorage()
+function initNotes(): void {
+  readLocalStorageNotes()
   let theme = <string>localStorage.getItem('ds-notes-theme')
   setTheme(theme); //TODO why is this semicolon necessary?
   (document.querySelector('#txt') as HTMLDivElement).style.fontSize = (localStorage.getItem("ds-notes-font-size") as string)
@@ -19,12 +19,12 @@ function init(): void {
 
 
 const textarea = <HTMLTextAreaElement>document.querySelector('#txt')
-const info = <HTMLTextAreaElement>document.querySelector('#info')
-const settings = <HTMLTextAreaElement>document.querySelector('#settings')
-textarea.addEventListener('input', writeLocalStorage)
-document.querySelector('#upper-left')!.addEventListener('click', toggleInfo)
-document.querySelector('#upper-right')!.addEventListener('click', toggleSettings)
-document.querySelector('#upper-middle')!.addEventListener('click', openTextarea)
+const info = <HTMLDivElement>document.querySelector('#info')
+const settings = <HTMLDivElement>document.querySelector('#settings')
+textarea.addEventListener('input', writeLocalStorageNotes)
+document.querySelector('#upper-left')!.addEventListener('click', toggleInfoNotes)
+document.querySelector('#upper-right')!.addEventListener('click', toggleSettingsNotes)
+document.querySelector('#upper-middle')!.addEventListener('click', OpenTextareaNotes)
 document.querySelectorAll('.si-fontsize').forEach(item => {
   (item as HTMLDivElement).addEventListener('click', changeFontSize)
 })
@@ -33,20 +33,20 @@ document.querySelectorAll('.settings-item-theme').forEach(item => {
 })
 
 
-function writeLocalStorage() {
+function writeLocalStorageNotes(): void {
   if (typeof(Storage) !== "undefined") {
       localStorage.setItem("ds-notes-text", textarea.value)
   } else {
-      document.getElementById("err")!.innerHTML = "Localstorage not supported"
+    displayError('LocalStorage not supported')
   }
 }
 
 
-function readLocalStorage() {
+function readLocalStorageNotes(): void {
   if (typeof(Storage) !== "undefined") {
       textarea.value = (localStorage.getItem("ds-notes-text") as string)
   } else {
-      document.getElementById("err")!.innerHTML = "Localstorage not supported"
+    displayError('LocalStorage not supported')
   }
 }
 
@@ -54,7 +54,7 @@ function readLocalStorage() {
 /*
 * Helper Functions
 */
-function changeTheme(e: Event) {
+function changeTheme(e: Event): void {
   switch ((e.currentTarget as Element).id) {
     case "select-theme-light":
       setTheme("theme-light")
@@ -76,39 +76,39 @@ function setTheme(themeName: string): void {
 }
 
 
-function changeFontSize(e: Event) {
+function changeFontSize(e: Event): void {
   let newFontSize: string = (e.currentTarget as Element).id.split('-')[2] + "px"
-  localStorage.setItem("ds-notes-font-size", newFontSize)
-  document.getElementById('txt')!.style.fontSize = newFontSize
+  localStorage.setItem("ds-notes-font-size", newFontSize);
+  (document.querySelector('#txt') as HTMLTextAreaElement)!.style.fontSize = newFontSize
 }
 
 
 /*
 * UI Navigation
 */
-function toggleInfo() {
-  appState.openWindow !== 'info' ? openInfo() : openTextarea()
+function toggleInfoNotes(): void {
+  notesAppState.openWindow !== 'info' ? openInfoNotes() : OpenTextareaNotes()
 }
-function toggleSettings() {
-  appState.openWindow !== 'settings' ? openSettings() : openTextarea()
+function toggleSettingsNotes(): void {
+  notesAppState.openWindow !== 'settings' ? openSettingsNotes() : OpenTextareaNotes()
 }
 
-function openSettings():void {
+function openSettingsNotes(): void {
   textarea.style.display = 'none'
   info.style.display = 'none'
   settings.style.display = 'flex'
-  appState.openWindow = 'settings'
+  notesAppState.openWindow = 'settings'
 }
 
-function openTextarea():void {
+function OpenTextareaNotes(): void {
   settings.style.display = 'none'
   info.style.display = 'none'
   textarea.style.display = 'inline'
-  appState.openWindow = 'main'
+  notesAppState.openWindow = 'main'
 }
-function openInfo(): void {
+function openInfoNotes(): void {
   textarea.style.display = 'none'
   settings.style.display = 'none'
   info.style.display = 'inline'
-  appState.openWindow = "info"
+  notesAppState.openWindow = "info"
 }
