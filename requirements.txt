@@ -27,8 +27,8 @@ Version 8 - Weather App v1
   [] Sun, Clouds, Rain, Snow,... 
 
 Version 7 - Conventions
-[] file/folder naming conventions should be followed (research these!)
-[] JS should be broken into multiple files to make parts reusable
+[x] file/folder naming conventions should be followed (research these!)
+[x] JS should be broken into multiple files to make parts reusable
 
 Version 6 - More Style
 [x] Menu items should give visual feedback on hover and click

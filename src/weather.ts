@@ -1,3 +1,5 @@
+import { OpenWeatherAPIData } from "./openWeatherAPIInterface"
+
 console.log("hello")
 
 
@@ -30,7 +32,10 @@ document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded'
 
 function initWeather(): void {
   // add eventListener 'input', writeLocalStorageWeater to apikey and location fields
+  // getWeather(location, api_key)
 }
+
+
 
 const weatherMain = <HTMLDivElement>document.querySelector('#weather')
 const weatherInfo = <HTMLDivElement>document.querySelector('#info')
@@ -60,10 +65,32 @@ function getLocationOrEmptyString(): string {
   return ""
 }
 
-function getWeather(): void {
-  // get apikey
-  // get location
-  // make fetch request
+function getWeatherOrError(): void {
+  let apiKey: string = 'f0f0e5794a7f1fae24ace9d4fd99b75f'
+  let lat: number = 48.229900
+  let lon: number = 16.371100
+  getWeatherFromAPI(lat, lon, apiKey)
+    .then(data => {
+      populateUIWithWeatherData(data)
+    })
+}
+
+function getWeatherFromAPI(lat: number, lon: number, apiKey: string): Promise<OpenWeatherAPIData> {
+  let exclude: string = 'minutely,alerts'
+  return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}`)
+    .then(res=> res.json())
+    .then(res => {
+      return res as OpenWeatherAPIData
+    })
+}
+
+function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
+  document.querySelector('#current-temp')!.innerHTML = String(convertAndRoundTemp(data.current.temp))
+}
+
+function convertAndRoundTemp(kelvin: number): number {
+  // TODO this currently just converts to celsius. maybe give C / F option in settings?
+  return Math.round(kelvin - 273.15)
 }
 
 /*

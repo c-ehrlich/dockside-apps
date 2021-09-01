@@ -16,9 +16,9 @@ const textarea = document.querySelector('#txt');
 const info = document.querySelector('#info');
 const settings = document.querySelector('#settings');
 textarea.addEventListener('input', writeLocalStorageNotes);
-document.querySelector('#upper-left').addEventListener('click', toggleInfo);
-document.querySelector('#upper-right').addEventListener('click', toggleSettings);
-document.querySelector('#upper-middle').addEventListener('click', openTextarea);
+document.querySelector('#upper-left').addEventListener('click', toggleInfoNotes);
+document.querySelector('#upper-right').addEventListener('click', toggleSettingsNotes);
+document.querySelector('#upper-middle').addEventListener('click', OpenTextareaNotes);
 document.querySelectorAll('.si-fontsize').forEach(item => {
     item.addEventListener('click', changeFontSize);
 });
@@ -70,25 +70,25 @@ function changeFontSize(e) {
 /*
 * UI Navigation
 */
-function toggleInfo() {
-    notesAppState.openWindow !== 'info' ? openInfo() : openTextarea();
+function toggleInfoNotes() {
+    notesAppState.openWindow !== 'info' ? openInfoNotes() : OpenTextareaNotes();
 }
-function toggleSettings() {
-    notesAppState.openWindow !== 'settings' ? openSettings() : openTextarea();
+function toggleSettingsNotes() {
+    notesAppState.openWindow !== 'settings' ? openSettingsNotes() : OpenTextareaNotes();
 }
-function openSettings() {
+function openSettingsNotes() {
     textarea.style.display = 'none';
     info.style.display = 'none';
     settings.style.display = 'flex';
     notesAppState.openWindow = 'settings';
 }
-function openTextarea() {
+function OpenTextareaNotes() {
     settings.style.display = 'none';
     info.style.display = 'none';
     textarea.style.display = 'inline';
     notesAppState.openWindow = 'main';
 }
-function openInfo() {
+function openInfoNotes() {
     textarea.style.display = 'none';
     settings.style.display = 'none';
     info.style.display = 'inline';
