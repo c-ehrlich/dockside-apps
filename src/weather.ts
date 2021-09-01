@@ -1,5 +1,3 @@
-import { OpenWeatherAPIData } from "./openWeatherAPIInterface"
-
 console.log("hello")
 
 
@@ -14,15 +12,21 @@ console.log("hello")
 //   - 'now' says the time of the last fetch
 //   - hourly and daily has it implicitly because of the labels
 
-let weatherAppState: {
-  openWindow: string,
-  weatherTab: string,
-  api_key: string,
-  location: string,
-} = {
-  openWindow: "main",
-  weatherTab: "now",
-  api_key: getApiKeyOrEmptyString(),
+// let weatherAppState: {
+//   openWindow: string,
+//   weatherTab: string,
+//   api_key: string,
+//   location: string,
+// } = {
+//   openWindow: "main",
+//   weatherTab: "now",
+//   api_key: getApiKeyOrEmptyString(),
+//   location: getLocationOrEmptyString(),
+// }
+let weatherAppState = {
+  openWindow: 'main',
+  weatherTab: 'now',
+  apiKey: getApiKeyOrEmptyString(),
   location: getLocationOrEmptyString(),
 }
 
@@ -33,8 +37,13 @@ document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded'
 function initWeather(): void {
   // add eventListener 'input', writeLocalStorageWeater to apikey and location fields
   // getWeather(location, api_key)
+  document.querySelector('#upper-left')!.addEventListener('click', toggleInfoWeather)
+  document.querySelector('#upper-middle')!.addEventListener('click', openMainWeather)
+  document.querySelector('#upper-right')!.addEventListener('click', toggleSettingsWeather)
+  document.querySelector('#mode-now')!.addEventListener('click', openWeatherNow)
+  document.querySelector('#mode-today')!.addEventListener('click', openWeatherToday)
+  document.querySelector('#mode-week')!.addEventListener('click', openWeatherWeek)
 }
-
 
 
 const weatherMain = <HTMLDivElement>document.querySelector('#weather')
@@ -104,11 +113,140 @@ function toggleSettingsWeather(): void {
 }
 
 function openMainWeather(): void {
-  // do something
+  console.log('openMainWeather');
+  (document.querySelector('#weather') as HTMLDivElement).style.display = 'inline';
+  (document.querySelector('#info') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#settings') as HTMLDivElement).style.display = 'none';
+  weatherAppState.openWindow = 'main'
 }
 function openInfoWeather(): void {
-  // do stuff
+  console.log('openInfoWeather');
+  (document.querySelector('#weather') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#info') as HTMLDivElement).style.display = 'inline';
+  (document.querySelector('#settings') as HTMLDivElement).style.display = 'none';
+  weatherAppState.openWindow = 'info'
 }
 function openSettingsWeather(): void {
-  // do stuff
+  console.log('openSettingsWeather');
+  (document.querySelector('#weather') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#info') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#settings') as HTMLDivElement).style.display = 'inline';
+  weatherAppState.openWindow = 'settings'
+}
+
+function openWeatherNow(): void {
+  console.log('openWeatherNow');
+  (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'flex';
+  (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'none';
+  weatherAppState.weatherTab = 'now'
+}
+function openWeatherToday(): void {
+  console.log('openWeatherToday');
+  (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'flex';
+  (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'none';
+  weatherAppState.weatherTab = 'today'
+}
+function openWeatherWeek(): void {
+  console.log('openWeatherWeek');
+  (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'none';
+  (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'flex';
+  weatherAppState.weatherTab = 'week'
+}
+
+
+/*
+* API interface
+* We can't do this in a separate file, because then this .ts file becomes a model
+* which doesn't work when opening a local html file (file://).
+*/
+interface OpenWeatherAPIData {
+  lat:             number;
+  lon:             number;
+  timezone:        string;
+  timezone_offset: number;
+  current:         Current;
+  hourly:          Current[];
+  daily:           Daily[];
+}
+
+interface Current {
+  dt:         number;
+  sunrise?:   number;
+  sunset?:    number;
+  temp:       number;
+  feels_like: number;
+  pressure:   number;
+  humidity:   number;
+  dew_point:  number;
+  uvi:        number;
+  clouds:     number;
+  visibility: number;
+  wind_speed: number;
+  wind_deg:   number;
+  wind_gust:  number;
+  weather:    Weather[];
+  pop?:       number;
+}
+
+interface Weather {
+  id:          number;
+  main:        Main;
+  description: Description;
+  icon:        string;
+}
+
+enum Description {
+  BrokenClouds = "broken clouds",
+  ClearSky = "clear sky",
+  FewClouds = "few clouds",
+  LightRain = "light rain",
+  OvercastClouds = "overcast clouds",
+  ScatteredClouds = "scattered clouds",
+}
+
+enum Main {
+  Clear = "Clear",
+  Clouds = "Clouds",
+  Rain = "Rain",
+}
+
+interface Daily {
+  dt:         number;
+  sunrise:    number;
+  sunset:     number;
+  moonrise:   number;
+  moonset:    number;
+  moon_phase: number;
+  temp:       Temp;
+  feels_like: FeelsLike;
+  pressure:   number;
+  humidity:   number;
+  dew_point:  number;
+  wind_speed: number;
+  wind_deg:   number;
+  wind_gust:  number;
+  weather:    Weather[];
+  clouds:     number;
+  pop:        number;
+  uvi:        number;
+  rain?:      number;
+}
+
+interface FeelsLike {
+  day:   number;
+  night: number;
+  eve:   number;
+  morn:  number;
+}
+
+interface Temp {
+  day:   number;
+  min:   number;
+  max:   number;
+  night: number;
+  eve:   number;
+  morn:  number;
 }

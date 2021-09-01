@@ -27,7 +27,7 @@
         </div>
       </div>
       <div id="lower">
-        <div id="weather" style="display: inline"></div>
+        <div id="weather" style="display: inline">
           <div id="mode-select">
             <div class="mode-select-item" id="mode-now">Now</div>
             <div class="mode-select-item" id="mode-today">Today</div>
@@ -38,24 +38,23 @@
               <img src="../img/weather/10d@2x.png">
               <div id="current-temp"></div>
             </div>
-            <div id="weather-display-today">
-
+            <div id="weather-display-today" style="display: none">
+              Today
             </div>
-            <div id="weather-display-week">
-
+            <div id="weather-display-week" style="display: none">
+              Week
             </div>
           </div>
         </div>
-        <div id="info">
-          <!-- info goes here -->
+        <div id="info" style="display: none">
+          Info
         </div>
-        <div id="settings">
-          <!-- settings go here -->
+        <div id="settings" style="display: none">
+          Settings 
         </div>
       </div>
     </div>
 
-    <script src="../scripts/openWeatherAPIInterface.js"></script>
     <script src="../scripts/weather.js"></script>
 
   </body>

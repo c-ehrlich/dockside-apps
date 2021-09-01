@@ -8,21 +8,21 @@ var notesAppState = {
 document.readyState === 'loading' ? document.addEventListener("DOMContentLoaded", initNotes) : initNotes();
 function initNotes() {
     readLocalStorageNotes();
-    let theme = localStorage.getItem('ds-notes-theme');
+    var theme = localStorage.getItem('ds-notes-theme');
     setTheme(theme); //TODO why is this semicolon necessary?
     document.querySelector('#txt').style.fontSize = localStorage.getItem("ds-notes-font-size");
 }
-const textarea = document.querySelector('#txt');
-const info = document.querySelector('#info');
-const settings = document.querySelector('#settings');
+var textarea = document.querySelector('#txt');
+var info = document.querySelector('#info');
+var settings = document.querySelector('#settings');
 textarea.addEventListener('input', writeLocalStorageNotes);
 document.querySelector('#upper-left').addEventListener('click', toggleInfoNotes);
 document.querySelector('#upper-right').addEventListener('click', toggleSettingsNotes);
 document.querySelector('#upper-middle').addEventListener('click', OpenTextareaNotes);
-document.querySelectorAll('.si-fontsize').forEach(item => {
+document.querySelectorAll('.si-fontsize').forEach(function (item) {
     item.addEventListener('click', changeFontSize);
 });
-document.querySelectorAll('.settings-item-theme').forEach(item => {
+document.querySelectorAll('.settings-item-theme').forEach(function (item) {
     item.addEventListener('click', changeTheme);
 });
 function writeLocalStorageNotes() {
@@ -63,7 +63,7 @@ function setTheme(themeName) {
     document.documentElement.classList.add(themeName);
 }
 function changeFontSize(e) {
-    let newFontSize = e.currentTarget.id.split('-')[2] + "px";
+    var newFontSize = e.currentTarget.id.split('-')[2] + "px";
     localStorage.setItem("ds-notes-font-size", newFontSize);
     document.querySelector('#txt').style.fontSize = newFontSize;
 }
