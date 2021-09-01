@@ -17,13 +17,14 @@ Version 9 - Layout
 
 Version 8 - Weather App v1
 [] Right from the start all the weather related functions that dont deal with UI should be a file of their own
+  [] MAYBE NOT because of modules
 [] The weather app should make an API call when it is launched, and store that in an update
-[] The weather app should save the time it made that call to a variable (global?) and display it in the console
 [] The weather app should show, in any kind of crude format, the following data:
   [] Current temperature & Humidity
   [] Hourly temperature for the next 5 (?) hours
   [] Daily temperature (day & night?) for the next 5 days
-[] The weather app should (in plain text for now) show something that represents the condition
+  [] Location: https://www.codegrepper.com/code-examples/php/get+city+name+from+latitude+and+longitude+in+js
+[] The weather app should a picture that represents the condition
   [] Sun, Clouds, Rain, Snow,... 
 
 Version 7 - Conventions

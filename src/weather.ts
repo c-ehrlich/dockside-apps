@@ -29,6 +29,9 @@ let weatherAppState = {
   apiKey: getApiKeyOrEmptyString(),
   location: getLocationOrEmptyString(),
 }
+const weekdayName: String[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
+
 
 // DOMContentLoaded may fire before the script has a chance to run, so check before running init stuff
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initWeather) : initWeather()
@@ -43,6 +46,7 @@ function initWeather(): void {
   document.querySelector('#mode-now')!.addEventListener('click', openWeatherNow)
   document.querySelector('#mode-today')!.addEventListener('click', openWeatherToday)
   document.querySelector('#mode-week')!.addEventListener('click', openWeatherWeek)
+  getWeatherOrError()
 }
 
 
@@ -94,13 +98,43 @@ function getWeatherFromAPI(lat: number, lon: number, apiKey: string): Promise<Op
 }
 
 function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
+  let now = new Date() // TS-ify this
+  let hour: number = now.getHours()
+  let weekday: number = now.getDay()
+  // set current weather
   document.querySelector('#current-temp')!.innerHTML = String(convertAndRoundTemp(data.current.temp))
+  document.querySelector('#current-description')!.innerHTML = data.current.weather[0].description
+  let iconURL: string = `../img/weather/${data.current.weather[0].icon}@2x.png`;
+  (document.querySelector('#current-img') as HTMLImageElement).src = iconURL
+  document.querySelector('#current-high')!.innerHTML = String(convertAndRoundTemp(data.daily[0].temp.max))
+  document.querySelector('#current-low')!.innerHTML = String(convertAndRoundTemp(data.daily[0].temp.min))
+
+  // set today weather
+  for (let h: number = 0; h < 5; h++) {
+    let hourDiv: HTMLDivElement = document.querySelector(`[data-hour="${h}"]`)!
+    hourDiv.querySelector('.today-time')!.innerHTML = String((hour + h) % 24) + "h"
+    hourDiv.querySelector('.today-temp')!.innerHTML = String(convertAndRoundTemp(data.hourly[0].temp))
+    let iconURL: string = `../img/weather/${data.hourly[h].weather[0].icon}@2x.png`;
+    (hourDiv.querySelector('.today-img') as HTMLImageElement).src = iconURL
+  }
+
+  // set week weather todo figure out how to get day numbers
+  for (let d: number = 0; d < 5; d++) {
+    let dayDiv: HTMLDivElement = document.querySelector(`[data-day="${d}"]`)!
+    dayDiv.querySelector('.week-date')!.innerHTML = String(weekdayName[(weekday + d) % 7])
+    let iconURL: string = `../img/weather/${data.daily[d].weather[0].icon}@2x.png`;
+    (dayDiv.querySelector('.week-img') as HTMLImageElement).src = iconURL
+    dayDiv.querySelector('.week-day')!.innerHTML = String(convertAndRoundTemp(data.daily[d].temp.day))
+    dayDiv.querySelector('.week-night')!.innerHTML = String(convertAndRoundTemp(data.daily[d].temp.night))
+  }
 }
+
 
 function convertAndRoundTemp(kelvin: number): number {
   // TODO this currently just converts to celsius. maybe give C / F option in settings?
   return Math.round(kelvin - 273.15)
 }
+
 
 /*
 * UI Navigation

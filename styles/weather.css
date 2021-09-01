@@ -34,5 +34,62 @@
 }
 
 #weather-display {
-  background-color: lightblue;
+  background-color: #5b94c1;
+}
+
+.weather-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly
+}
+
+.weather-display-now {
+  display: grid;
+  grid-template-areas:
+    "img location  location  location  location"
+    "img condition condition condition condition"
+    "img temp      temp      temp      temp"
+    "img highlabel high      lowlabel  low";
+}
+
+.day-grid {
+  display: grid;
+  grid-template-areas:
+  "date"
+  "img"
+  "temp";
+}
+
+.week-grid {
+  display: grid;
+  grid-template-areas: 
+    "date date"
+    "img  img"
+    "day  night";
+}
+.week-date { grid-area: date; }
+.week-img { grid-area: img; }
+.week-day { grid-area: day; }
+.week-night { grid-area: night; }
+
+.today-time,
+.week-date {
+  font-size: 14px;
+}
+
+
+.today-img,
+.week-img {
+  width: 30px;
+}
+
+/* font colors */
+.today-time { color: white; }
+.today-temp { color: white; }
+.week-date { color: white; }
+.week-day { color: white; }
+.week-night { 
+  color: #aac8df;
+  font-size: 12px;
 }

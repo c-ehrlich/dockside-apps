@@ -27,6 +27,7 @@ var weatherAppState = {
     apiKey: getApiKeyOrEmptyString(),
     location: getLocationOrEmptyString(),
 };
+var weekdayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // DOMContentLoaded may fire before the script has a chance to run, so check before running init stuff
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initWeather) : initWeather();
 function initWeather() {
@@ -38,6 +39,7 @@ function initWeather() {
     document.querySelector('#mode-now').addEventListener('click', openWeatherNow);
     document.querySelector('#mode-today').addEventListener('click', openWeatherToday);
     document.querySelector('#mode-week').addEventListener('click', openWeatherWeek);
+    getWeatherOrError();
 }
 var weatherMain = document.querySelector('#weather');
 var weatherInfo = document.querySelector('#info');
@@ -82,7 +84,33 @@ function getWeatherFromAPI(lat, lon, apiKey) {
     });
 }
 function populateUIWithWeatherData(data) {
+    var now = new Date(); // TS-ify this
+    var hour = now.getHours();
+    var weekday = now.getDay();
+    // set current weather
     document.querySelector('#current-temp').innerHTML = String(convertAndRoundTemp(data.current.temp));
+    document.querySelector('#current-description').innerHTML = data.current.weather[0].description;
+    var iconURL = "../img/weather/" + data.current.weather[0].icon + "@2x.png";
+    document.querySelector('#current-img').src = iconURL;
+    document.querySelector('#current-high').innerHTML = String(convertAndRoundTemp(data.daily[0].temp.max));
+    document.querySelector('#current-low').innerHTML = String(convertAndRoundTemp(data.daily[0].temp.min));
+    // set today weather
+    for (var h = 0; h < 5; h++) {
+        var hourDiv = document.querySelector("[data-hour=\"" + h + "\"]");
+        hourDiv.querySelector('.today-time').innerHTML = String((hour + h) % 24) + "h";
+        hourDiv.querySelector('.today-temp').innerHTML = String(convertAndRoundTemp(data.hourly[0].temp));
+        var iconURL_1 = "../img/weather/" + data.hourly[h].weather[0].icon + "@2x.png";
+        hourDiv.querySelector('.today-img').src = iconURL_1;
+    }
+    // set week weather todo figure out how to get day numbers
+    for (var d = 0; d < 5; d++) {
+        var dayDiv = document.querySelector("[data-day=\"" + d + "\"]");
+        dayDiv.querySelector('.week-date').innerHTML = String(weekdayName[(weekday + d) % 7]);
+        var iconURL_2 = "../img/weather/" + data.daily[d].weather[0].icon + "@2x.png";
+        dayDiv.querySelector('.week-img').src = iconURL_2;
+        dayDiv.querySelector('.week-day').innerHTML = String(convertAndRoundTemp(data.daily[d].temp.day));
+        dayDiv.querySelector('.week-night').innerHTML = String(convertAndRoundTemp(data.daily[d].temp.night));
+    }
 }
 function convertAndRoundTemp(kelvin) {
     // TODO this currently just converts to celsius. maybe give C / F option in settings?
