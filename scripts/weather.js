@@ -86,13 +86,15 @@ function getLongitudeOrEmptyString() {
     return "";
 }
 function getWeatherOrError() {
-    var test = localStorage.getItem('ds-weather-apikey') ? 'yes' : 'no';
-    console.log(test);
-    var apiKey = 'f0f0e5794a7f1fae24ace9d4fd99b75f';
-    var lat = 48.229900;
-    var lon = 16.371100;
+    var apiKey = localStorage.getItem('ds-weather-apikey');
+    var lat = localStorage.getItem('ds-weather-latitude');
+    var lon = localStorage.getItem('ds-weather-longitude');
     getWeatherFromAPI(lat, lon, apiKey)
         .then(function (data) {
+        if (data.hasOwnProperty('cod')) {
+            // TODO: display this in a better way
+            console.log("Error code " + data.cod + ": " + data.message);
+        }
         populateUIWithWeatherData(data);
     });
 }

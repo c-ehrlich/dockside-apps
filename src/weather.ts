@@ -96,18 +96,20 @@ function getLongitudeOrEmptyString(): string {
 }
 
 function getWeatherOrError(): void {
-  let test: string = (localStorage.getItem('ds-weather-apikey') as string) ? 'yes' : 'no'
-  console.log(test)
-  let apiKey: string = '
-  let lat: number = 48.229900
-  let lon: number = 16.371100
+  let apiKey: string = (localStorage.getItem('ds-weather-apikey') as string)
+  let lat: string = (localStorage.getItem('ds-weather-latitude') as string)
+  let lon: string = (localStorage.getItem('ds-weather-longitude') as string)
   getWeatherFromAPI(lat, lon, apiKey)
     .then(data => {
+      if (data.hasOwnProperty('cod')) {
+        // TODO: display this in a better way
+        console.log(`Error code ${data.cod}: ${data.message}`)
+      }
       populateUIWithWeatherData(data)
     })
 }
 
-function getWeatherFromAPI(lat: number, lon: number, apiKey: string): Promise<OpenWeatherAPIData> {
+function getWeatherFromAPI(lat: string, lon: string, apiKey: string): Promise<OpenWeatherAPIData> {
   let exclude: string = 'minutely,alerts'
   return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}`)
     .then(res=> res.json())
@@ -216,6 +218,10 @@ function openWeatherWeek(): void {
 * which doesn't work when opening a local html file (file://).
 */
 interface OpenWeatherAPIData {
+  // for bad requests
+  cod:             string;
+  message:         string;
+  // for successful requests
   lat:             number;
   lon:             number;
   timezone:        string;
