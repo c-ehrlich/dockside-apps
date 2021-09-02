@@ -1,36 +1,21 @@
 "use strict";
-console.log("hello");
 // TODO
-// Settings
-//   - 1. API key
-//   - 2. location (just use a location request, user clicks a thing and it happens?)
 // don't put a refresh button on the main screen. instead:
 //   - if data fails to fetch, put an error screen that has the refresh button and notes on adding apikey/location
 //   - maybe a button in the settings?
 //   - maybe settings says when the last successful fetch was?
 //   - 'now' says the time of the last fetch
 //   - hourly and daily has it implicitly because of the labels
-// let weatherAppState: {
-//   openWindow: string,
-//   weatherTab: string,
-//   api_key: string,
-//   location: string,
-// } = {
-//   openWindow: "main",
-//   weatherTab: "now",
-//   api_key: getApiKeyOrEmptyString(),
-//   location: getLocationOrEmptyString(),
-// }
 var weatherAppState = {
     openWindow: 'main',
     weatherTab: 'now',
-    apiKey: getApiKeyOrEmptyString(),
-    location: getLocationOrEmptyString(),
 };
 var weekdayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // DOMContentLoaded may fire before the script has a chance to run, so check before running init stuff
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initWeather) : initWeather();
 function initWeather() {
+    readLocalStorageWeather();
+    // get location
     // add eventListener 'input', writeLocalStorageWeater to apikey and location fields
     // getWeather(location, api_key)
     document.querySelector('#upper-left').addEventListener('click', toggleInfoWeather);
@@ -39,6 +24,10 @@ function initWeather() {
     document.querySelector('#mode-now').addEventListener('click', openWeatherNow);
     document.querySelector('#mode-today').addEventListener('click', openWeatherToday);
     document.querySelector('#mode-week').addEventListener('click', openWeatherWeek);
+    document.querySelector('#location-get').addEventListener('click', getLocation);
+    document.querySelector('#apikey-input').addEventListener('change', writeLocalStorageWeather);
+    document.querySelector('#location-lat-input').addEventListener('change', function () { return writeLocalStorageWeather; });
+    document.querySelector('#location-long-input').addEventListener('change', function () { return writeLocalStorageWeather; });
     getWeatherOrError();
 }
 var weatherMain = document.querySelector('#weather');
@@ -46,27 +35,59 @@ var weatherInfo = document.querySelector('#info');
 var weatherSettings = document.querySelector('#settings');
 function readLocalStorageWeather() {
     if (typeof (Storage) !== 'undefined') {
-        // set apikey textfield to `(localStorage.getItem("ds-weather-apikey") as string)`
-        // set location textfield to location
+        document.querySelector('#apikey-input').value = localStorage.getItem('ds-weather-apikey');
+        document.querySelector('#location-lat-input').value = localStorage.getItem('ds-weather-latitude');
+        document.querySelector('#location-long-input').value = localStorage.getItem('ds-weather-longitude');
+        // TODO or maybe just get current location on each launch? or add another localstorage item
+        // that checks when location was last updated and if it's over 24 hours ask again?
     }
     else {
-        document.querySelector('err').innerHTML = "LocalStorage not supported";
+        console.log("Error: LocalStorage not supported");
     }
 }
 function writeLocalStorageWeather() {
     if (typeof (Storage) !== 'undefined') {
+        localStorage.setItem('ds-weather-apikey', document.querySelector('#apikey-input').value);
+        localStorage.setItem('ds-weather-latitude', document.querySelector('#location-lat-input').value);
+        localStorage.setItem('ds-weather-longitude', document.querySelector('#location-long-input').value);
         // set (localStorage.getItem("ds-weather-apikey") as string) to apikey textfield
         // set location to location textfield
+    }
+    else {
+        console.log("Error: LocalStorage not supported");
     }
 }
 function getApiKeyOrEmptyString() {
     // TODO
     return "";
 }
-function getLocationOrEmptyString() {
+function getLocation() {
+    if (!navigator.geolocation) {
+        console.log('Geolocation not supported by browser');
+    }
+    else {
+        navigator.geolocation.getCurrentPosition(
+        // success
+        function (position) {
+            document.querySelector('#location-lat-input').value = String(position.coords.latitude);
+            document.querySelector('#location-long-input').value = String(position.coords.longitude);
+            writeLocalStorageWeather();
+        }, 
+        // error
+        function () {
+            console.log('failed getting location');
+        });
+    }
+}
+function getLatitudeOrEmptyString() {
+    return "";
+}
+function getLongitudeOrEmptyString() {
     return "";
 }
 function getWeatherOrError() {
+    var test = localStorage.getItem('ds-weather-apikey') ? 'yes' : 'no';
+    console.log(test);
     var apiKey = 'f0f0e5794a7f1fae24ace9d4fd99b75f';
     var lat = 48.229900;
     var lon = 16.371100;
@@ -182,3 +203,4 @@ var Main;
     Main["Clouds"] = "Clouds";
     Main["Rain"] = "Rain";
 })(Main || (Main = {}));
+console.log('finished running weather.ts');

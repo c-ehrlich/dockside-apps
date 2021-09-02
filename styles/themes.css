@@ -27,3 +27,11 @@
   --line-height: 1.1;
   --icon-filter: invert(19%) sepia(9%) saturate(6058%) hue-rotate(30deg) brightness(94%) contrast(101%);
 }
+
+.theme-weather-blue {
+  --color-background-main: #5b94c1;
+  --font-family: 'Courier Prime', monospace;
+  --line-heihgt: normal;
+  --font-color: white;
+  --font-color-lowcontrast: #aac8df;
+}

@@ -62,6 +62,7 @@
 }
 
 .week-grid {
+  /* border: 1px solid #aac8df; */
   display: grid;
   grid-template-areas: 
     "date date"
@@ -92,4 +93,76 @@
 .week-night { 
   color: #aac8df;
   font-size: 12px;
+}
+
+/*
+* SETTINGS
+*/
+#settings-grid {
+  display: grid;
+  grid-template-columns: 25px auto 2px auto 25px;
+  grid-template-areas:
+    ".              apikey-label       apikey-label apikey-label        .                  "
+    "apikey-info    apikey-input       apikey-input apikey-input        refresh-button     "
+    ".              location-lat-label .            location-long-label location-long-label"
+    "location-get   location-lat-input .            location-long-input location-long-input";
+}
+
+#apikey-label {
+  grid-area: apikey-label;
+}
+#apikey-info {
+  grid-area: apikey-info;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#apikey-info-img {
+  width: 22px;
+  height: 22px;
+}
+#apikey-input {
+  grid-area: apikey-input;
+}
+#location-get {
+  grid-area: location-get;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#location-get:hover {
+  cursor: pointer;
+}
+#location-get-img {
+  width: 21px;
+  height: 21px;
+}
+#location-lat-label {
+  grid-area: location-lat-label;
+}
+#location-lat-input {
+  grid-area: location-lat-input;
+}
+#location-long-label {
+  grid-area: location-long-label;
+}
+#location-long-input {
+  grid-area: location-long-input;
+}
+#refresh-button {
+  grid-area: refresh-button;
+  justify-self: end;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#refresh-button-img {
+  width: 23px;
+  height: 23px;
 }

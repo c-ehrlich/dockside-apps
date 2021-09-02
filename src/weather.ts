@@ -1,10 +1,4 @@
-console.log("hello")
-
-
 // TODO
-// Settings
-//   - 1. API key
-//   - 2. location (just use a location request, user clicks a thing and it happens?)
 // don't put a refresh button on the main screen. instead:
 //   - if data fails to fetch, put an error screen that has the refresh button and notes on adding apikey/location
 //   - maybe a button in the settings?
@@ -12,25 +6,11 @@ console.log("hello")
 //   - 'now' says the time of the last fetch
 //   - hourly and daily has it implicitly because of the labels
 
-// let weatherAppState: {
-//   openWindow: string,
-//   weatherTab: string,
-//   api_key: string,
-//   location: string,
-// } = {
-//   openWindow: "main",
-//   weatherTab: "now",
-//   api_key: getApiKeyOrEmptyString(),
-//   location: getLocationOrEmptyString(),
-// }
 let weatherAppState = {
   openWindow: 'main',
   weatherTab: 'now',
-  apiKey: getApiKeyOrEmptyString(),
-  location: getLocationOrEmptyString(),
 }
 const weekdayName: String[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-
 
 
 // DOMContentLoaded may fire before the script has a chance to run, so check before running init stuff
@@ -38,6 +18,8 @@ document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded'
 
 
 function initWeather(): void {
+  readLocalStorageWeather()
+  // get location
   // add eventListener 'input', writeLocalStorageWeater to apikey and location fields
   // getWeather(location, api_key)
   document.querySelector('#upper-left')!.addEventListener('click', toggleInfoWeather)
@@ -46,6 +28,10 @@ function initWeather(): void {
   document.querySelector('#mode-now')!.addEventListener('click', openWeatherNow)
   document.querySelector('#mode-today')!.addEventListener('click', openWeatherToday)
   document.querySelector('#mode-week')!.addEventListener('click', openWeatherWeek)
+  document.querySelector('#location-get')!.addEventListener('click', getLocation)
+  document.querySelector('#apikey-input')!.addEventListener('change', writeLocalStorageWeather)
+  document.querySelector('#location-lat-input')!.addEventListener('change', () => writeLocalStorageWeather)
+  document.querySelector('#location-long-input')!.addEventListener('change', () => writeLocalStorageWeather)
   getWeatherOrError()
 }
 
@@ -56,17 +42,25 @@ const weatherSettings = <HTMLDivElement>document.querySelector('#settings')
 
 function readLocalStorageWeather(): void {
   if (typeof(Storage) !== 'undefined') {
-    // set apikey textfield to `(localStorage.getItem("ds-weather-apikey") as string)`
-    // set location textfield to location
+    (document.querySelector('#apikey-input') as HTMLInputElement).value = (localStorage.getItem('ds-weather-apikey') as string);
+    (document.querySelector('#location-lat-input') as HTMLInputElement).value = (localStorage.getItem('ds-weather-latitude') as string);
+    (document.querySelector('#location-long-input') as HTMLInputElement).value = (localStorage.getItem('ds-weather-longitude') as string);
+    // TODO or maybe just get current location on each launch? or add another localstorage item
+    // that checks when location was last updated and if it's over 24 hours ask again?
   } else {
-    document.querySelector('err')!.innerHTML = "LocalStorage not supported"
+    console.log("Error: LocalStorage not supported")
   }
 }
 
 function writeLocalStorageWeather(): void {
   if (typeof(Storage) !== 'undefined') {
+    localStorage.setItem('ds-weather-apikey', (document.querySelector('#apikey-input') as HTMLInputElement).value as string)
+    localStorage.setItem('ds-weather-latitude', (document.querySelector('#location-lat-input') as HTMLInputElement).value)
+    localStorage.setItem('ds-weather-longitude', (document.querySelector('#location-long-input') as HTMLInputElement).value)
     // set (localStorage.getItem("ds-weather-apikey") as string) to apikey textfield
     // set location to location textfield
+  } else {
+    console.log("Error: LocalStorage not supported")
   }
 }
 
@@ -74,12 +68,37 @@ function getApiKeyOrEmptyString(): string {
   // TODO
   return ""
 }
-function getLocationOrEmptyString(): string {
+
+function getLocation(): void {
+  if (!navigator.geolocation) {
+    console.log('Geolocation not supported by browser')
+  } else {
+    navigator.geolocation.getCurrentPosition(
+      // success
+      position => {
+        (document.querySelector('#location-lat-input') as HTMLInputElement).value = String(position.coords.latitude);
+        (document.querySelector('#location-long-input') as HTMLInputElement).value = String(position.coords.longitude);
+        writeLocalStorageWeather()
+      },
+      // error
+      () => {
+        console.log('failed getting location')
+      }
+    )
+  }
+}
+
+function getLatitudeOrEmptyString(): string {
+  return ""
+}
+function getLongitudeOrEmptyString(): string {
   return ""
 }
 
 function getWeatherOrError(): void {
-  let apiKey: string = 'f0f0e5794a7f1fae24ace9d4fd99b75f'
+  let test: string = (localStorage.getItem('ds-weather-apikey') as string) ? 'yes' : 'no'
+  console.log(test)
+  let apiKey: string = '
   let lat: number = 48.229900
   let lon: number = 16.371100
   getWeatherFromAPI(lat, lon, apiKey)
@@ -284,3 +303,5 @@ interface Temp {
   eve:   number;
   morn:  number;
 }
+
+console.log('finished running weather.ts')
