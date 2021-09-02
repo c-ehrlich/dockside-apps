@@ -5,27 +5,36 @@ Ideas for future Goals
 [] Weather widget using OpenWeatherMap
 [] One More App?
 
+Version 12 - Tooltips
+[ ] There should be hover tooltips on everything that's not clear
+  [ ] So the buttons in settings
+  [ ] Anything else?
+
 Version 11 - Failure
-[] The app should display something (modal?) if the API request fails
+[ ] The app should display something (modal?) if the API request fails
 
 Version 10 - Refresh
-[] The weather app should automatically make a renewed API request and update its views with that data, every 10 minutes
-[] The time of the last request and next request should be shown on the settings screen
+[ ] The weather app should automatically make a renewed API request and update its views with that data, every 10 minutes
+[ ] The time of the last request and next request should be shown on the settings screen
+[ ] Reconsider the settings screen
+  [ ] Maybe the lat/long fields don't have their own fields and instead that's just the default text in them
+  [ ] Then we get a couple pixels at the bottom to put a different refresh button or just get more spacing
+    [ ] or 'last update: xxx minutes ago', and maybe re-calculate that everytime the settings screen is opened, or maybe have it update itself automatically once a minute or something?
 
 Version 9 - Layout
-[] Should have a basic layout for the three screens (now, hours, days)
+[x] Should have a basic layout for the three screens (now, hours, days)
+[ ] The Settings and Help screens should have nice layout
+[ ] Stop importing themes.css, do everything manually instead of this one? Just define some color vars at the top of weather.css
 
 Version 8 - Weather App v1
-[] Right from the start all the weather related functions that dont deal with UI should be a file of their own
-  [] MAYBE NOT because of modules
-[] The weather app should make an API call when it is launched, and store that in an update
-[] The weather app should show, in any kind of crude format, the following data:
-  [] Current temperature & Humidity
-  [] Hourly temperature for the next 5 (?) hours
-  [] Daily temperature (day & night?) for the next 5 days
-  [] Location: https://www.codegrepper.com/code-examples/php/get+city+name+from+latitude+and+longitude+in+js
-[] The weather app should a picture that represents the condition
-  [] Sun, Clouds, Rain, Snow,... 
+[x] The weather app should make an API call when it is launched, and store that in an update
+[x] The weather app should show, in any kind of crude format, the following data:
+  [x] Current temperature & Humidity
+  [x] Hourly temperature for the next 5 (?) hours
+  [x] Daily temperature (day & night?) for the next 5 days
+  [x] Location: https://www.codegrepper.com/code-examples/php/get+city+name+from+latitude+and+longitude+in+js
+[x] The weather app should a picture that represents the condition
+  [x] Sun, Clouds, Rain, Snow,... 
 
 Version 7 - Conventions
 [x] file/folder naming conventions should be followed (research these!)

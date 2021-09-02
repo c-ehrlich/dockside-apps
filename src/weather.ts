@@ -104,8 +104,17 @@ function getWeatherOrError(): void {
       if (data.hasOwnProperty('cod')) {
         // TODO: display this in a better way
         console.log(`Error code ${data.cod}: ${data.message}`)
+      } else {
+        populateUIWithWeatherData(data)
       }
-      populateUIWithWeatherData(data)
+    })
+  getLocationFromAPI(lat, lon, apiKey)
+    .then(data => {
+      if (data.cod === '200') {
+        document.querySelector('#current-location')!.innerHTML = data.list[0].name
+      } else {
+        console.log(`Error code ${data.cod}: ${data.message}`)
+      }
     })
 }
 
@@ -118,17 +127,25 @@ function getWeatherFromAPI(lat: string, lon: string, apiKey: string): Promise<Op
     })
 }
 
+function getLocationFromAPI(lat: string, lon: string, apiKey: string): Promise<OpenWeatherAPILocationData> {
+  return fetch(`http://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=1&appid=${apiKey}`)
+  .then(res => res.json())
+  .then(res => {
+    console.log(res)
+    return res as OpenWeatherAPILocationData
+  })
+}
+
 function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
   let now = new Date() // TS-ify this
   let hour: number = now.getHours()
   let weekday: number = now.getDay()
   // set current weather
   document.querySelector('#current-temp')!.innerHTML = String(convertAndRoundTemp(data.current.temp))
-  document.querySelector('#current-description')!.innerHTML = data.current.weather[0].description
   let iconURL: string = `../img/weather/${data.current.weather[0].icon}@2x.png`;
   (document.querySelector('#current-img') as HTMLImageElement).src = iconURL
-  document.querySelector('#current-high')!.innerHTML = String(convertAndRoundTemp(data.daily[0].temp.max))
-  document.querySelector('#current-low')!.innerHTML = String(convertAndRoundTemp(data.daily[0].temp.min))
+  document.querySelector('#current-high')!.innerHTML = `High: ${String(convertAndRoundTemp(data.daily[0].temp.max))}`
+  document.querySelector('#current-low')!.innerHTML = `Low: ${String(convertAndRoundTemp(data.daily[0].temp.min))}`
 
   // set today weather
   for (let h: number = 0; h < 5; h++) {
@@ -169,7 +186,7 @@ function toggleSettingsWeather(): void {
 
 function openMainWeather(): void {
   console.log('openMainWeather');
-  (document.querySelector('#weather') as HTMLDivElement).style.display = 'inline';
+  (document.querySelector('#weather') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#info') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#settings') as HTMLDivElement).style.display = 'none';
   weatherAppState.openWindow = 'main'
@@ -177,7 +194,7 @@ function openMainWeather(): void {
 function openInfoWeather(): void {
   console.log('openInfoWeather');
   (document.querySelector('#weather') as HTMLDivElement).style.display = 'none';
-  (document.querySelector('#info') as HTMLDivElement).style.display = 'inline';
+  (document.querySelector('#info') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#settings') as HTMLDivElement).style.display = 'none';
   weatherAppState.openWindow = 'info'
 }
@@ -185,7 +202,7 @@ function openSettingsWeather(): void {
   console.log('openSettingsWeather');
   (document.querySelector('#weather') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#info') as HTMLDivElement).style.display = 'none';
-  (document.querySelector('#settings') as HTMLDivElement).style.display = 'inline';
+  (document.querySelector('#settings') as HTMLDivElement).style.display = 'flex';
   weatherAppState.openWindow = 'settings'
 }
 
@@ -213,7 +230,7 @@ function openWeatherWeek(): void {
 
 
 /*
-* API interface
+* API interface for main request
 * We can't do this in a separate file, because then this .ts file becomes a model
 * which doesn't work when opening a local html file (file://).
 */
@@ -309,5 +326,66 @@ interface Temp {
   eve:   number;
   morn:  number;
 }
+
+/*
+* API interface for location request
+* We can't do this in a separate file, because then this .ts file becomes a model
+* which doesn't work when opening a local html file (file://).
+*/
+interface OpenWeatherAPILocationData {
+  message: string;
+  cod:     string;
+  count:   number;
+  list:    List[];
+}
+
+interface List {
+  id:      number;
+  name:    string;
+  coord:   Coord;
+  main:    MainLoc;
+  dt:      number;
+  wind:    Wind;
+  sys:     Sys;
+  rain:    null;
+  snow:    null;
+  clouds:  Clouds;
+  weather: WeatherLoc[];
+}
+interface Clouds {
+  all: number;
+}
+
+interface Coord {
+  lat: number;
+  lon: number;
+}
+
+interface MainLoc {
+  temp:       number;
+  feels_like: number;
+  temp_min:   number;
+  temp_max:   number;
+  pressure:   number;
+  humidity:   number;
+}
+
+interface Sys {
+  country: string;
+}
+
+interface WeatherLoc {
+  id:          number;
+  main:        string;
+  description: string;
+  icon:        string;
+}
+
+interface Wind {
+  speed: number;
+  deg:   number;
+}
+
+
 
 console.log('finished running weather.ts')

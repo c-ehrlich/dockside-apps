@@ -27,7 +27,7 @@
         </div>
       </div>
       <div id="lower">
-        <div id="weather" style="display: inline">
+        <div id="weather">
           <div id="mode-select">
             <div class="mode-select-item" id="mode-now">Now</div>
             <div class="mode-select-item" id="mode-today">Today</div>
@@ -35,12 +35,13 @@
           </div>
           <div id="weather-display">
             <div id="weather-display-now">
-              <img id="current-img" src="../img/weather/10d@2x.png">
-              <div id="current-location">~ todo location~</div>
-              <div id="current-description"></div>
-              <div id="current-temp"></div>
-              <div id="current-high"></div>
-              <div id="current-low"></div>
+              <div id="weather-display-now-grid">
+                <img id="current-img" src="../img/weather/10d@2x.png">
+                <div id="current-location">~ todo location~</div>
+                <div id="current-temp"></div>
+                <div id="current-high"></div>
+                <div id="current-low"></div>
+              </div>
             </div>
             <div id="weather-display-today" style="display: none">
               <div class="weather-row">
@@ -108,10 +109,11 @@
           </div>
         </div>
         <div id="info" style="display: none">
-          <p>DS Notes uses LocalStorage. You will need to re-enter your API Key and location if you clear browsing data.</p>
-          <p>To get a free API Key, visit <a href="https://openweathermap.org/api">openweathermap.com/api</a></p>
-          <hr>
-          <p>Dockside Apps - More info - <a href="https://www.github.com/c-ehrlich">github.com/c-ehrlich</a></p>
+          <div id="info-container">
+            <p>DS Notes uses LocalStorage. You will need to re-enter your API Key and location if you clear browsing data.</p>
+            <hr>
+            <p>Dockside Apps - More info - <a href="https://www.github.com/c-ehrlich">github.com/c-ehrlich</a></p>
+          </div>
         </div>
         <div id="settings" style="display: none">
           <div id="settings-grid">
@@ -123,14 +125,13 @@
             <div id="location-get">
               <img src="../img/location.svg" alt="Get Location" id="location-get-img">
             </div>
-            <div id="location-lat-label">lat</div>
-            <input type="text" id="location-lat-input">
-            <div id="location-long-label">long</div>
-            <input type="text" id="location-long-input">
+            <input type="text" id="location-lat-input" placeholder = "latitude">
+            <input type="text" id="location-long-input" placeholder = "longitude">
             <div id="refresh-label"></div>
             <div id="refresh-button">
               <img src="../img/refresh.svg" alt="Refresh Weather" id="refresh-button-img">
             </div>
+            <div id="last-update">Last Update: <span id="last-update-time">TKTK</span>m ago</div>
           </div>
         </div>
       </div>

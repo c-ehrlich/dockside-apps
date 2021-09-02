@@ -95,7 +95,18 @@ function getWeatherOrError() {
             // TODO: display this in a better way
             console.log("Error code " + data.cod + ": " + data.message);
         }
-        populateUIWithWeatherData(data);
+        else {
+            populateUIWithWeatherData(data);
+        }
+    });
+    getLocationFromAPI(lat, lon, apiKey)
+        .then(function (data) {
+        if (data.cod === '200') {
+            document.querySelector('#current-location').innerHTML = data.list[0].name;
+        }
+        else {
+            console.log("Error code " + data.cod + ": " + data.message);
+        }
     });
 }
 function getWeatherFromAPI(lat, lon, apiKey) {
@@ -106,17 +117,24 @@ function getWeatherFromAPI(lat, lon, apiKey) {
         return res;
     });
 }
+function getLocationFromAPI(lat, lon, apiKey) {
+    return fetch("http://api.openweathermap.org/data/2.5/find?lat=" + lat + "&lon=" + lon + "&cnt=1&appid=" + apiKey)
+        .then(function (res) { return res.json(); })
+        .then(function (res) {
+        console.log(res);
+        return res;
+    });
+}
 function populateUIWithWeatherData(data) {
     var now = new Date(); // TS-ify this
     var hour = now.getHours();
     var weekday = now.getDay();
     // set current weather
     document.querySelector('#current-temp').innerHTML = String(convertAndRoundTemp(data.current.temp));
-    document.querySelector('#current-description').innerHTML = data.current.weather[0].description;
     var iconURL = "../img/weather/" + data.current.weather[0].icon + "@2x.png";
     document.querySelector('#current-img').src = iconURL;
-    document.querySelector('#current-high').innerHTML = String(convertAndRoundTemp(data.daily[0].temp.max));
-    document.querySelector('#current-low').innerHTML = String(convertAndRoundTemp(data.daily[0].temp.min));
+    document.querySelector('#current-high').innerHTML = "High: " + String(convertAndRoundTemp(data.daily[0].temp.max));
+    document.querySelector('#current-low').innerHTML = "Low: " + String(convertAndRoundTemp(data.daily[0].temp.min));
     // set today weather
     for (var h = 0; h < 5; h++) {
         var hourDiv = document.querySelector("[data-hour=\"" + h + "\"]");
@@ -150,7 +168,7 @@ function toggleSettingsWeather() {
 }
 function openMainWeather() {
     console.log('openMainWeather');
-    document.querySelector('#weather').style.display = 'inline';
+    document.querySelector('#weather').style.display = 'flex';
     document.querySelector('#info').style.display = 'none';
     document.querySelector('#settings').style.display = 'none';
     weatherAppState.openWindow = 'main';
@@ -158,7 +176,7 @@ function openMainWeather() {
 function openInfoWeather() {
     console.log('openInfoWeather');
     document.querySelector('#weather').style.display = 'none';
-    document.querySelector('#info').style.display = 'inline';
+    document.querySelector('#info').style.display = 'flex';
     document.querySelector('#settings').style.display = 'none';
     weatherAppState.openWindow = 'info';
 }
@@ -166,7 +184,7 @@ function openSettingsWeather() {
     console.log('openSettingsWeather');
     document.querySelector('#weather').style.display = 'none';
     document.querySelector('#info').style.display = 'none';
-    document.querySelector('#settings').style.display = 'inline';
+    document.querySelector('#settings').style.display = 'flex';
     weatherAppState.openWindow = 'settings';
 }
 function openWeatherNow() {

@@ -1,8 +1,20 @@
+#container {
+  height: 100%;
+}
+
+#lower {
+  display: flex;
+  flex-direction: column;
+}
+
 #weather {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   outline: none;
-  font-family: var(--font-family);
+  font-family: Helvetica, Arial, sans-serif;
+  /* font-family: var(--font-family); */
   font-weight: 400;
   /* font-size: defined programmatically in js; */
   background-color: var(--color-primary);
@@ -35,6 +47,8 @@
 
 #weather-display {
   background-color: #5b94c1;
+  flex: 1 1 auto;
+  display: flex;
 }
 
 .weather-row {
@@ -44,26 +58,94 @@
   justify-content: space-evenly
 }
 
-.weather-display-now {
-  display: grid;
-  grid-template-areas:
-    "img location  location  location  location"
-    "img condition condition condition condition"
-    "img temp      temp      temp      temp"
-    "img highlabel high      lowlabel  low";
+#weather-display-now {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
 }
 
+#weather-display-now-grid {
+  width: 182px;
+  display: grid;
+  column-gap: 4px;
+  grid-row: auto 42px;
+  grid-column: 60px auto auto;
+  grid-template-areas:
+    /* "img location  location"
+    "img temp      temp"
+    "img high      low"; */
+    "img location  location "
+    "img temp      high     "
+    "img temp      low      "
+}
+#current-img {
+  grid-area: img;
+  width: 60px;
+  align-self: center;
+  justify-self: center;
+}
+#current-location {
+  grid-area: location;
+  /* text-align: center; */
+  font-size: 12px;
+  color: white;
+}
+#current-temp {
+  grid-area: temp;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-size: 40px;
+  font-weight: 700;
+  align-self: center;
+  color: white;
+}
+#current-high {
+  grid-area: high;
+  align-self: center;
+  font-size: 12px;
+  color: white;
+  padding-top: 2px;
+}
+#current-low {
+  grid-area: low;
+  align-self: center;
+  font-size: 12px;
+  color: white;
+  padding-bottom: 2px;
+}
+
+#weather-display-today {
+  width: 100%;
+}
 .day-grid {
   display: grid;
+  justify-items: center;
   grid-template-areas:
   "date"
   "img"
   "temp";
 }
+.today-time {
+  grid-area: date;
+  text-align: center;
+}
+.today-img {
+  grid-area: img;
+}
+.today-temp {
+  grid-area: temp;
+  text-align: center;
+}
 
+#weather-display-week {
+  width: 100%;
+}
 .week-grid {
   /* border: 1px solid #aac8df; */
   display: grid;
+  justify-items: center;
   grid-template-areas: 
     "date date"
     "img  img"
@@ -98,18 +180,27 @@
 /*
 * SETTINGS
 */
+#settings {
+  max-width: 100%;
+  flex: 1 1 auto;
+}
 #settings-grid {
+  max-width: 100%;
   display: grid;
-  grid-template-columns: 25px auto 2px auto 25px;
+  grid-template-columns: 25px auto auto 25px;
   grid-template-areas:
-    ".              apikey-label       apikey-label apikey-label        .                  "
-    "apikey-info    apikey-input       apikey-input apikey-input        refresh-button     "
-    ".              location-lat-label .            location-long-label location-long-label"
-    "location-get   location-lat-input .            location-long-input location-long-input";
+    ".              apikey-label       apikey-label        .                  "
+    "apikey-info    apikey-input       apikey-input        refresh-button     "
+    "location-get   location-lat-input location-long-input location-long-input"
+    ".              last-update        last-update         last-update        ";
 }
 
 #apikey-label {
   grid-area: apikey-label;
+  font-size: 11px;
+  font-family: Helvetica, Arial, sans-serif;
+  /* font-family: 'Courier Prime', monospace; */
+  margin-top: 1px;
 }
 #apikey-info {
   grid-area: apikey-info;
@@ -125,6 +216,8 @@
 }
 #apikey-input {
   grid-area: apikey-input;
+  font-size: 10px;
+  border-width: 1px;
 }
 #location-get {
   grid-area: location-get;
@@ -141,17 +234,19 @@
   width: 21px;
   height: 21px;
 }
-#location-lat-label {
-  grid-area: location-lat-label;
-}
 #location-lat-input {
   grid-area: location-lat-input;
-}
-#location-long-label {
-  grid-area: location-long-label;
+  font-size: 10px;
+  width: calc(100% - 6px);
+  /* width: 70px; */
+  border-width: 1px;
 }
 #location-long-input {
   grid-area: location-long-input;
+  font-size: 10px;
+  width: calc(100% - 6px);
+  /* width: 70px; */
+  border-width: 1px;;
 }
 #refresh-button {
   grid-area: refresh-button;
@@ -165,4 +260,25 @@
 #refresh-button-img {
   width: 23px;
   height: 23px;
+}
+#last-update {
+  grid-area: last-update;
+  font-size: 10px;
+  font-family: Helvetica, Arial, sans-serif;
+  /* font-family: 'Courier Prime', monospace; */
+}
+
+/*
+* Info
+*/
+#info {
+  flex: 1 1 auto;
+  font-size: 10px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+#info-container {
+  margin: 2px 4px 2px 4px;
+}
+#info-container > p {
+  margin: 0;
 }
