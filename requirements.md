@@ -9,6 +9,7 @@ Version 12 - Tooltips
 [ ] There should be hover tooltips on everything that's not clear
   [ ] So the buttons in settings
   [ ] Anything else?
+  https://www.w3schools.com/howto/howto_css_tooltip.asp
 
 Version 11 - Failure
 [ ] The app should display something (modal?) if the API request fails

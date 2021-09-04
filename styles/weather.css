@@ -186,13 +186,14 @@
 }
 #settings-grid {
   max-width: 100%;
+  margin-right: 2px;
   display: grid;
-  grid-template-columns: 25px auto auto 25px;
+  grid-template-columns: 25px auto auto;
   grid-template-areas:
-    ".              apikey-label       apikey-label        .                  "
-    "apikey-info    apikey-input       apikey-input        refresh-button     "
-    "location-get   location-lat-input location-long-input location-long-input"
-    ".              last-update        last-update         last-update        ";
+    ".              apikey-label       apikey-label        "
+    "apikey-info    apikey-input       apikey-input        "
+    "location-get   location-lat-input location-long-input "
+    "refresh-button last-update        last-update         ";
 }
 
 #apikey-label {
@@ -263,6 +264,7 @@
 }
 #last-update {
   grid-area: last-update;
+  align-self: center;
   font-size: 10px;
   font-family: Helvetica, Arial, sans-serif;
   /* font-family: 'Courier Prime', monospace; */
