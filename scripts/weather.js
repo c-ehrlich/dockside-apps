@@ -28,7 +28,7 @@ function initWeather() {
     document.querySelector('#apikey-input').addEventListener('change', writeLocalStorageWeather);
     document.querySelector('#location-lat-input').addEventListener('change', function () { return writeLocalStorageWeather; });
     document.querySelector('#location-long-input').addEventListener('change', function () { return writeLocalStorageWeather; });
-    getWeatherOrError();
+    getWeatherHourly(); // get weather data once on launch, then get it once an hour
 }
 var weatherMain = document.querySelector('#weather');
 var weatherInfo = document.querySelector('#info');
@@ -57,10 +57,6 @@ function writeLocalStorageWeather() {
         console.log("Error: LocalStorage not supported");
     }
 }
-function getApiKeyOrEmptyString() {
-    // TODO
-    return "";
-}
 function getLocation() {
     if (!navigator.geolocation) {
         console.log('Geolocation not supported by browser');
@@ -79,11 +75,18 @@ function getLocation() {
         });
     }
 }
-function getLatitudeOrEmptyString() {
-    return "";
-}
-function getLongitudeOrEmptyString() {
-    return "";
+function getWeatherHourly() {
+    /*
+    * Gets weather data once when called, then sets a Timeout to get it again
+    * at the next full hour
+    */
+    var d = new Date();
+    var h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0);
+    var e = h.valueOf() - d.valueOf();
+    if (e > 100) { // just in case to prevent infinite loops
+        window.setTimeout(function () { return getWeatherHourly; }, e);
+    }
+    getWeatherOrError();
 }
 function getWeatherOrError() {
     var apiKey = localStorage.getItem('ds-weather-apikey');

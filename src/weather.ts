@@ -32,13 +32,14 @@ function initWeather(): void {
   document.querySelector('#apikey-input')!.addEventListener('change', writeLocalStorageWeather)
   document.querySelector('#location-lat-input')!.addEventListener('change', () => writeLocalStorageWeather)
   document.querySelector('#location-long-input')!.addEventListener('change', () => writeLocalStorageWeather)
-  getWeatherOrError()
+  getWeatherHourly() // get weather data once on launch, then get it once an hour
 }
 
 
 const weatherMain = <HTMLDivElement>document.querySelector('#weather')
 const weatherInfo = <HTMLDivElement>document.querySelector('#info')
 const weatherSettings = <HTMLDivElement>document.querySelector('#settings')
+
 
 function readLocalStorageWeather(): void {
   if (typeof(Storage) !== 'undefined') {
@@ -52,6 +53,7 @@ function readLocalStorageWeather(): void {
   }
 }
 
+
 function writeLocalStorageWeather(): void {
   if (typeof(Storage) !== 'undefined') {
     localStorage.setItem('ds-weather-apikey', (document.querySelector('#apikey-input') as HTMLInputElement).value as string)
@@ -64,10 +66,6 @@ function writeLocalStorageWeather(): void {
   }
 }
 
-function getApiKeyOrEmptyString(): string {
-  // TODO
-  return ""
-}
 
 function getLocation(): void {
   if (!navigator.geolocation) {
@@ -88,12 +86,21 @@ function getLocation(): void {
   }
 }
 
-function getLatitudeOrEmptyString(): string {
-  return ""
+
+function getWeatherHourly() {
+  /*
+  * Gets weather data once when called, then sets a Timeout to get it again
+  * at the next full hour
+  */
+  let d: Date = new Date()
+  let h: Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0)
+  let e: number = h.valueOf() - d.valueOf()
+  if (e > 100) { // just in case to prevent infinite loops
+    window.setTimeout(() => getWeatherHourly, e)
+  }
+  getWeatherOrError()
 }
-function getLongitudeOrEmptyString(): string {
-  return ""
-}
+
 
 function getWeatherOrError(): void {
   let apiKey: string = (localStorage.getItem('ds-weather-apikey') as string)
@@ -118,6 +125,7 @@ function getWeatherOrError(): void {
     })
 }
 
+
 function getWeatherFromAPI(lat: string, lon: string, apiKey: string): Promise<OpenWeatherAPIData> {
   let exclude: string = 'minutely,alerts'
   return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}`)
@@ -127,6 +135,7 @@ function getWeatherFromAPI(lat: string, lon: string, apiKey: string): Promise<Op
     })
 }
 
+
 function getLocationFromAPI(lat: string, lon: string, apiKey: string): Promise<OpenWeatherAPILocationData> {
   return fetch(`http://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=1&appid=${apiKey}`)
   .then(res => res.json())
@@ -135,6 +144,7 @@ function getLocationFromAPI(lat: string, lon: string, apiKey: string): Promise<O
     return res as OpenWeatherAPILocationData
   })
 }
+
 
 function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
   let now = new Date() // TS-ify this
@@ -146,7 +156,6 @@ function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
   (document.querySelector('#current-img') as HTMLImageElement).src = iconURL
   document.querySelector('#current-high')!.innerHTML = `High: ${String(convertAndRoundTemp(data.daily[0].temp.max))}`
   document.querySelector('#current-low')!.innerHTML = `Low: ${String(convertAndRoundTemp(data.daily[0].temp.min))}`
-
   // set today weather
   for (let h: number = 0; h < 5; h++) {
     let hourDiv: HTMLDivElement = document.querySelector(`[data-hour="${h}"]`)!
@@ -155,7 +164,6 @@ function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
     let iconURL: string = `../img/weather/${data.hourly[h].weather[0].icon}@2x.png`;
     (hourDiv.querySelector('.today-img') as HTMLImageElement).src = iconURL
   }
-
   // set week weather todo figure out how to get day numbers
   for (let d: number = 0; d < 5; d++) {
     let dayDiv: HTMLDivElement = document.querySelector(`[data-day="${d}"]`)!
