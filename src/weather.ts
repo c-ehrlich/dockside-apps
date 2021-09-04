@@ -33,6 +33,10 @@ function initWeather(): void {
   document.querySelector('#apikey-input')!.addEventListener('change', writeLocalStorageWeather)
   document.querySelector('#location-lat-input')!.addEventListener('change', () => writeLocalStorageWeather)
   document.querySelector('#location-long-input')!.addEventListener('change', () => writeLocalStorageWeather)
+  document.querySelector('#refresh-button')!.addEventListener('click', getWeatherOrError)
+  document.querySelector('#apikey-info')!.addEventListener('click', () => {
+    window.open('https://home.openweathermap.org/users/sign_up')
+  })
   getWeatherHourly() // get weather data once on launch, then get it once an hour
   recursivelyUpdateLastDataUpdate() // start a 1m repeating timer to update the last time data was pulled
 }
@@ -94,12 +98,10 @@ function getWeatherHourly() {
   * Gets weather data once when called, then sets a Timeout to get it again
   * at the next full hour
   */
-  console.log('getWeatherHourly')
   let d: Date = new Date()
   let h: Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0)
   let e: number = h.valueOf() - d.valueOf()
   if (e > 10) { // just in case to prevent infinite loops
-    console.log('setting another getWeatherHourly')
     window.setTimeout(() => getWeatherHourly, e) // timer at the next hour
   } else {
     window.setTimeout(getWeatherHourly, 3600000) // timer for 1 hour
@@ -158,7 +160,6 @@ function recursivelyUpdateLastDataUpdate(): void {
   * The is separated from the main updateLastDataUpdate function so that we can
   * Also call the function non-recursively whenever necessary
   */
-  console.log('recursivelyUpdateLastDataUpdate')
   let d: Date = new Date()
   let h: Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() + 1, 0, 0)
   let e: number = h.valueOf() - d.valueOf()
@@ -231,21 +232,18 @@ function toggleSettingsWeather(): void {
 }
 
 function openMainWeather(): void {
-  console.log('openMainWeather');
   (document.querySelector('#weather') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#info') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#settings') as HTMLDivElement).style.display = 'none';
   weatherAppState.openWindow = 'main'
 }
 function openInfoWeather(): void {
-  console.log('openInfoWeather');
   (document.querySelector('#weather') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#info') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#settings') as HTMLDivElement).style.display = 'none';
   weatherAppState.openWindow = 'info'
 }
 function openSettingsWeather(): void {
-  console.log('openSettingsWeather');
   (document.querySelector('#weather') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#info') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#settings') as HTMLDivElement).style.display = 'flex';
@@ -253,21 +251,18 @@ function openSettingsWeather(): void {
 }
 
 function openWeatherNow(): void {
-  console.log('openWeatherNow');
   (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'none';
   weatherAppState.weatherTab = 'now'
 }
 function openWeatherToday(): void {
-  console.log('openWeatherToday');
   (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'none';
   weatherAppState.weatherTab = 'today'
 }
 function openWeatherWeek(): void {
-  console.log('openWeatherWeek');
   (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'flex';

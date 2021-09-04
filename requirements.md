@@ -18,25 +18,24 @@ Version 11 - Failure
   [ ] Maybe just use the same display: none trick as everywhere else?
 
 Version 10 - Refresh
-[ ] The weather app should automatically make a renewed API request and update its views with that data, every 10 minutes
-[ ] The time of the last request and next request should be shown on the settings screen
-[ ] The refresh button in the settings menu should actually refresh
+[x] The weather app should automatically make a renewed API request and update its views with that data, once an hour
+[x] the amount of time since the last refresh should be showin in the settings screen
+[x] The refresh button in the settings menu should actually refresh
 [x] Reconsider the settings screen
   [x] Maybe the lat/long fields don't have their own fields and instead that's just the default text in them
   [x] Then we get a couple pixels at the bottom to put a different refresh button or just get more spacing
     [x] or 'last update: xxx minutes ago', and maybe re-calculate that everytime the settings screen is opened, or maybe have it update itself automatically once a minute or something?
 
 Version 9.5 - Styling
-[ ] The ? Button in the settings screen should link to the information on making an OpenWeatherAPI token
+[x] The ? Button in the settings screen should link to the information on making an OpenWeatherAPI token
 [ ] Stop importing themes.css, do everything manually instead of this one? Just define some color vars at the top of weather.css
 [ ] Make it a nice color scheme everywhere
-[ ] Everything that's clickable should have a hover effect and pointer cursor
+[x] Everything that's clickable should have a hover effect and pointer cursor
 
 Version 9 - Layout
 [x] Should have a basic layout for the three screens (now, hours, days)
 [x] The Settings and Help screens should have nice layout
-[ ] Reduce the left and right padding (?) of the image on "Now" a bit
-[ ] What do do if the location doesn't fit on one line
+[x] What do do if the location doesn't fit on one line
   [ ] Maybe truncate it?
 
 Version 8 - Weather App v1

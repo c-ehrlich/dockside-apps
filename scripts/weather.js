@@ -29,6 +29,10 @@ function initWeather() {
     document.querySelector('#apikey-input').addEventListener('change', writeLocalStorageWeather);
     document.querySelector('#location-lat-input').addEventListener('change', function () { return writeLocalStorageWeather; });
     document.querySelector('#location-long-input').addEventListener('change', function () { return writeLocalStorageWeather; });
+    document.querySelector('#refresh-button').addEventListener('click', getWeatherOrError);
+    document.querySelector('#apikey-info').addEventListener('click', function () {
+        window.open('https://home.openweathermap.org/users/sign_up');
+    });
     getWeatherHourly(); // get weather data once on launch, then get it once an hour
     recursivelyUpdateLastDataUpdate(); // start a 1m repeating timer to update the last time data was pulled
 }
@@ -82,12 +86,10 @@ function getWeatherHourly() {
     * Gets weather data once when called, then sets a Timeout to get it again
     * at the next full hour
     */
-    console.log('getWeatherHourly');
     var d = new Date();
     var h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0);
     var e = h.valueOf() - d.valueOf();
     if (e > 10) { // just in case to prevent infinite loops
-        console.log('setting another getWeatherHourly');
         window.setTimeout(function () { return getWeatherHourly; }, e); // timer at the next hour
     }
     else {
@@ -141,7 +143,6 @@ function recursivelyUpdateLastDataUpdate() {
     * The is separated from the main updateLastDataUpdate function so that we can
     * Also call the function non-recursively whenever necessary
     */
-    console.log('recursivelyUpdateLastDataUpdate');
     var d = new Date();
     var h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() + 1, 0, 0);
     var e = h.valueOf() - d.valueOf();
@@ -206,42 +207,36 @@ function toggleSettingsWeather() {
     weatherAppState.openWindow !== 'settings' ? openSettingsWeather() : openMainWeather();
 }
 function openMainWeather() {
-    console.log('openMainWeather');
     document.querySelector('#weather').style.display = 'flex';
     document.querySelector('#info').style.display = 'none';
     document.querySelector('#settings').style.display = 'none';
     weatherAppState.openWindow = 'main';
 }
 function openInfoWeather() {
-    console.log('openInfoWeather');
     document.querySelector('#weather').style.display = 'none';
     document.querySelector('#info').style.display = 'flex';
     document.querySelector('#settings').style.display = 'none';
     weatherAppState.openWindow = 'info';
 }
 function openSettingsWeather() {
-    console.log('openSettingsWeather');
     document.querySelector('#weather').style.display = 'none';
     document.querySelector('#info').style.display = 'none';
     document.querySelector('#settings').style.display = 'flex';
     weatherAppState.openWindow = 'settings';
 }
 function openWeatherNow() {
-    console.log('openWeatherNow');
     document.querySelector('#weather-display-now').style.display = 'flex';
     document.querySelector('#weather-display-today').style.display = 'none';
     document.querySelector('#weather-display-week').style.display = 'none';
     weatherAppState.weatherTab = 'now';
 }
 function openWeatherToday() {
-    console.log('openWeatherToday');
     document.querySelector('#weather-display-now').style.display = 'none';
     document.querySelector('#weather-display-today').style.display = 'flex';
     document.querySelector('#weather-display-week').style.display = 'none';
     weatherAppState.weatherTab = 'today';
 }
 function openWeatherWeek() {
-    console.log('openWeatherWeek');
     document.querySelector('#weather-display-now').style.display = 'none';
     document.querySelector('#weather-display-today').style.display = 'none';
     document.querySelector('#weather-display-week').style.display = 'flex';

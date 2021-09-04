@@ -117,20 +117,23 @@
         </div>
         <div id="settings" style="display: none">
           <div id="settings-grid">
-            <div id="apikey-info">
+            <div id="apikey-info" class="tooltip">
               <img src="../img/question.svg" alt="API Key Info" id="apikey-info-img">
+              <span id="apikey-info-tooltip" class="tooltip-text">Click to register for a free API Key</span>
             </div>
             <input type="text" id="apikey-input">
-            <div id="location-get">
+            <div id="location-get" class="tooltip">
               <img src="../img/location.svg" alt="Get Location" id="location-get-img">
+              <span id="location-get-tooltip" class="tooltip-text">Click to refresh the location</span>
             </div>
             <input type="text" id="location-lat-input" placeholder = "latitude">
             <input type="text" id="location-long-input" placeholder = "longitude">
             <div id="refresh-label"></div>
-            <div id="refresh-button">
+            <div id="refresh-button" class="tooltip">
               <img src="../img/refresh.svg" alt="Refresh Weather" id="refresh-button-img">
+              <span id="refresh-button-tooltip" class="tooltip-text">Click to manually refresh weather data</span>
             </div>
-            <div id="last-update">Last Update: <span id="last-update-time">TKTK</span>m ago</div>
+            <div id="last-update">Last Update: <span id="last-update-time">0</span>m ago</div>
           </div>
         </div>
       </div>
