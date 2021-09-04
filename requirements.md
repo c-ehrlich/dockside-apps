@@ -1,15 +1,13 @@
 Ideas for future Goals
-[] The notes app should default to dark or light mode depending on system UI
-[] time tracker (2-3 different things to track, change their names in settings, start and pause buttons, keep data of every day forever)
-[] Pomodoro app
-[] Weather widget using OpenWeatherMap
-[] One More App?
+[ ] time tracker (2-3 different things to track, change their names in settings, start and pause buttons, keep data of every day forever)
+[ ] Pomodoro app
+[x] Weather widget using OpenWeatherMap
+[ ] One More App?
 
 Version 12 - Tooltips
-[ ] There should be hover tooltips on everything that's not clear
-  [ ] So the buttons in settings
-  [ ] Anything else?
-  https://www.w3schools.com/howto/howto_css_tooltip.asp
+[x] There should be hover tooltips on everything that's not clear
+  [x] So the buttons in settings
+  [ ] Maybe truncate location name and show the full thing in a tooltip?
 
 Version 11 - Failure
 [ ] The app should display something (modal?) if the API request fails
