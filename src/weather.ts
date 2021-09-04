@@ -9,6 +9,7 @@
 let weatherAppState = {
   openWindow: 'main',
   weatherTab: 'now',
+  lastDataUpdate: new Date(),
 }
 const weekdayName: String[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
@@ -33,6 +34,7 @@ function initWeather(): void {
   document.querySelector('#location-lat-input')!.addEventListener('change', () => writeLocalStorageWeather)
   document.querySelector('#location-long-input')!.addEventListener('change', () => writeLocalStorageWeather)
   getWeatherHourly() // get weather data once on launch, then get it once an hour
+  recursivelyUpdateLastDataUpdate() // start a 1m repeating timer to update the last time data was pulled
 }
 
 
@@ -92,11 +94,15 @@ function getWeatherHourly() {
   * Gets weather data once when called, then sets a Timeout to get it again
   * at the next full hour
   */
+  console.log('getWeatherHourly')
   let d: Date = new Date()
   let h: Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0)
   let e: number = h.valueOf() - d.valueOf()
-  if (e > 100) { // just in case to prevent infinite loops
-    window.setTimeout(() => getWeatherHourly, e)
+  if (e > 10) { // just in case to prevent infinite loops
+    console.log('setting another getWeatherHourly')
+    window.setTimeout(() => getWeatherHourly, e) // timer at the next hour
+  } else {
+    window.setTimeout(getWeatherHourly, 3600000) // timer for 1 hour
   }
   getWeatherOrError()
 }
@@ -146,6 +152,36 @@ function getLocationFromAPI(lat: string, lon: string, apiKey: string): Promise<O
 }
 
 
+function recursivelyUpdateLastDataUpdate(): void {
+  /*
+  * Update the time since last data update once a minute
+  * The is separated from the main updateLastDataUpdate function so that we can
+  * Also call the function non-recursively whenever necessary
+  */
+  console.log('recursivelyUpdateLastDataUpdate')
+  let d: Date = new Date()
+  let h: Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() + 1, 0, 0)
+  let e: number = h.valueOf() - d.valueOf()
+  if (e > 10) { // make sure we don't infinite loop
+    window.setTimeout(recursivelyUpdateLastDataUpdate, e) // timer at the next minute
+  } else {
+    window.setTimeout(recursivelyUpdateLastDataUpdate, 60000) // timer for 1 minute
+  }
+  updateLastDataUpdate()
+}
+
+
+function updateLastDataUpdate(): void {
+  /*
+  * calculate the amount of minutes since the last data update and display it in the settings screen
+  */
+  console.log('updateLastDataUpdate')
+  let d: Date = new Date()
+  let timeSinceUpdate: number = Math.floor((d.valueOf() - weatherAppState.lastDataUpdate.valueOf()) / 60000)
+  document.querySelector('#last-update-time')!.innerHTML = String(timeSinceUpdate)
+}
+
+
 function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
   let now = new Date() // TS-ify this
   let hour: number = now.getHours()
@@ -173,6 +209,8 @@ function populateUIWithWeatherData(data: OpenWeatherAPIData): void {
     dayDiv.querySelector('.week-day')!.innerHTML = String(convertAndRoundTemp(data.daily[d].temp.day))
     dayDiv.querySelector('.week-night')!.innerHTML = String(convertAndRoundTemp(data.daily[d].temp.night))
   }
+  weatherAppState.lastDataUpdate = new Date()
+  updateLastDataUpdate()
 }
 
 

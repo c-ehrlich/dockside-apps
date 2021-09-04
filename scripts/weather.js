@@ -9,6 +9,7 @@
 var weatherAppState = {
     openWindow: 'main',
     weatherTab: 'now',
+    lastDataUpdate: new Date(),
 };
 var weekdayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // DOMContentLoaded may fire before the script has a chance to run, so check before running init stuff
@@ -29,6 +30,7 @@ function initWeather() {
     document.querySelector('#location-lat-input').addEventListener('change', function () { return writeLocalStorageWeather; });
     document.querySelector('#location-long-input').addEventListener('change', function () { return writeLocalStorageWeather; });
     getWeatherHourly(); // get weather data once on launch, then get it once an hour
+    recursivelyUpdateLastDataUpdate(); // start a 1m repeating timer to update the last time data was pulled
 }
 var weatherMain = document.querySelector('#weather');
 var weatherInfo = document.querySelector('#info');
@@ -80,11 +82,16 @@ function getWeatherHourly() {
     * Gets weather data once when called, then sets a Timeout to get it again
     * at the next full hour
     */
+    console.log('getWeatherHourly');
     var d = new Date();
     var h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0);
     var e = h.valueOf() - d.valueOf();
-    if (e > 100) { // just in case to prevent infinite loops
-        window.setTimeout(function () { return getWeatherHourly; }, e);
+    if (e > 10) { // just in case to prevent infinite loops
+        console.log('setting another getWeatherHourly');
+        window.setTimeout(function () { return getWeatherHourly; }, e); // timer at the next hour
+    }
+    else {
+        window.setTimeout(getWeatherHourly, 3600000); // timer for 1 hour
     }
     getWeatherOrError();
 }
@@ -128,6 +135,33 @@ function getLocationFromAPI(lat, lon, apiKey) {
         return res;
     });
 }
+function recursivelyUpdateLastDataUpdate() {
+    /*
+    * Update the time since last data update once a minute
+    * The is separated from the main updateLastDataUpdate function so that we can
+    * Also call the function non-recursively whenever necessary
+    */
+    console.log('recursivelyUpdateLastDataUpdate');
+    var d = new Date();
+    var h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() + 1, 0, 0);
+    var e = h.valueOf() - d.valueOf();
+    if (e > 10) { // make sure we don't infinite loop
+        window.setTimeout(recursivelyUpdateLastDataUpdate, e); // timer at the next minute
+    }
+    else {
+        window.setTimeout(recursivelyUpdateLastDataUpdate, 60000); // timer for 1 minute
+    }
+    updateLastDataUpdate();
+}
+function updateLastDataUpdate() {
+    /*
+    * calculate the amount of minutes since the last data update and display it in the settings screen
+    */
+    console.log('updateLastDataUpdate');
+    var d = new Date();
+    var timeSinceUpdate = Math.floor((d.valueOf() - weatherAppState.lastDataUpdate.valueOf()) / 60000);
+    document.querySelector('#last-update-time').innerHTML = String(timeSinceUpdate);
+}
 function populateUIWithWeatherData(data) {
     var now = new Date(); // TS-ify this
     var hour = now.getHours();
@@ -155,6 +189,8 @@ function populateUIWithWeatherData(data) {
         dayDiv.querySelector('.week-day').innerHTML = String(convertAndRoundTemp(data.daily[d].temp.day));
         dayDiv.querySelector('.week-night').innerHTML = String(convertAndRoundTemp(data.daily[d].temp.night));
     }
+    weatherAppState.lastDataUpdate = new Date();
+    updateLastDataUpdate();
 }
 function convertAndRoundTemp(kelvin) {
     // TODO this currently just converts to celsius. maybe give C / F option in settings?
