@@ -35,6 +35,7 @@ function initWeather() {
     });
     getWeatherHourly(); // get weather data once on launch, then get it once an hour
     recursivelyUpdateLastDataUpdate(); // start a 1m repeating timer to update the last time data was pulled
+    openWeatherNow(); // need to run this so the tab gets the highlight color
 }
 var weatherMain = document.querySelector('#weather');
 var weatherInfo = document.querySelector('#info');
@@ -223,18 +224,28 @@ function openSettingsWeather() {
     weatherAppState.openWindow = 'settings';
 }
 function openWeatherNow() {
+    // add .selected or something to now, and remove it from others
+    document.querySelector('#mode-now').classList.add('weather-active-tab');
+    document.querySelector('#mode-today').classList.remove('weather-active-tab');
+    document.querySelector('#mode-week').classList.remove('weather-active-tab');
     document.querySelector('#weather-display-now').style.display = 'flex';
     document.querySelector('#weather-display-today').style.display = 'none';
     document.querySelector('#weather-display-week').style.display = 'none';
     weatherAppState.weatherTab = 'now';
 }
 function openWeatherToday() {
+    document.querySelector('#mode-now').classList.remove('weather-active-tab');
+    document.querySelector('#mode-today').classList.add('weather-active-tab');
+    document.querySelector('#mode-week').classList.remove('weather-active-tab');
     document.querySelector('#weather-display-now').style.display = 'none';
     document.querySelector('#weather-display-today').style.display = 'flex';
     document.querySelector('#weather-display-week').style.display = 'none';
     weatherAppState.weatherTab = 'today';
 }
 function openWeatherWeek() {
+    document.querySelector('#mode-now').classList.remove('weather-active-tab');
+    document.querySelector('#mode-today').classList.remove('weather-active-tab');
+    document.querySelector('#mode-week').classList.add('weather-active-tab');
     document.querySelector('#weather-display-now').style.display = 'none';
     document.querySelector('#weather-display-today').style.display = 'none';
     document.querySelector('#weather-display-week').style.display = 'flex';

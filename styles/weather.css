@@ -45,6 +45,11 @@
   cursor: pointer;
 }
 
+.weather-active-tab {
+  /* text-decoration: underline; */
+  background-color: var(--color-accent);
+}
+
 #weather-display {
   background-color: #5b94c1;
   flex: 1 1 auto;
@@ -64,7 +69,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
 }
 
 #weather-display-now-grid {
@@ -148,7 +153,7 @@
   /* border: 1px solid #aac8df; */
   display: grid;
   justify-items: center;
-  grid-template-areas: 
+  grid-template-areas:
     "date date"
     "img  img"
     "day  night";
@@ -174,7 +179,7 @@
 .today-temp { color: white; }
 .week-date { color: white; }
 .week-day { color: white; }
-.week-night { 
+.week-night {
   color: #aac8df;
   font-size: 12px;
 }

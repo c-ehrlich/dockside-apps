@@ -31,7 +31,7 @@
 .theme-weather-blue {
   --color-background-main: #5b94c1;
   --font-family: 'Courier Prime', monospace;
-  --line-heihgt: normal;
+  --line-height: normal;
   --font-color: white;
   --font-color-lowcontrast: #aac8df;
 }

@@ -39,6 +39,7 @@ function initWeather(): void {
   })
   getWeatherHourly() // get weather data once on launch, then get it once an hour
   recursivelyUpdateLastDataUpdate() // start a 1m repeating timer to update the last time data was pulled
+  openWeatherNow() // need to run this so the tab gets the highlight color
 }
 
 
@@ -249,18 +250,28 @@ function openSettingsWeather(): void {
 }
 
 function openWeatherNow(): void {
+  // add .selected or something to now, and remove it from others
+  (document.querySelector('#mode-now') as HTMLDivElement).classList.add('weather-active-tab');
+  (document.querySelector('#mode-today') as HTMLDivElement).classList.remove('weather-active-tab');
+  (document.querySelector('#mode-week') as HTMLDivElement).classList.remove('weather-active-tab');
   (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'none';
   weatherAppState.weatherTab = 'now'
 }
 function openWeatherToday(): void {
+  (document.querySelector('#mode-now') as HTMLDivElement).classList.remove('weather-active-tab');
+  (document.querySelector('#mode-today') as HTMLDivElement).classList.add('weather-active-tab');
+  (document.querySelector('#mode-week') as HTMLDivElement).classList.remove('weather-active-tab');
   (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'flex';
   (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'none';
   weatherAppState.weatherTab = 'today'
 }
 function openWeatherWeek(): void {
+  (document.querySelector('#mode-now') as HTMLDivElement).classList.remove('weather-active-tab');
+  (document.querySelector('#mode-today') as HTMLDivElement).classList.remove('weather-active-tab');
+  (document.querySelector('#mode-week') as HTMLDivElement).classList.add('weather-active-tab');
   (document.querySelector('#weather-display-now') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-today') as HTMLDivElement).style.display = 'none';
   (document.querySelector('#weather-display-week') as HTMLDivElement).style.display = 'flex';
