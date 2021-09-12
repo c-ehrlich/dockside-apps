@@ -75,7 +75,7 @@ function writeLocalStorageWeather(): void {
 
 function getLocation(): void {
   if (!navigator.geolocation) {
-    console.log('Geolocation not supported by browser')
+    console.log('Error: Geolocation not supported by browser')
   } else {
     navigator.geolocation.getCurrentPosition(
       // success
@@ -86,7 +86,7 @@ function getLocation(): void {
       },
       // error
       () => {
-        console.log('failed getting location')
+        console.log('Error: Failed getting location')
       }
     )
   }
@@ -101,8 +101,8 @@ function getWeatherHourly() {
   let d: Date = new Date()
   let h: Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0)
   let e: number = h.valueOf() - d.valueOf()
-  if (e > 10) { // just in case to prevent infinite loops
-    window.setTimeout(() => getWeatherHourly, e) // timer at the next hour
+  if (e > 100) { // just in case to prevent infinite loops
+    window.setTimeout(getWeatherHourly, e) // timer at the next hour
   } else {
     window.setTimeout(getWeatherHourly, 3600000) // timer for 1 hour
   }
@@ -148,7 +148,6 @@ function getLocationFromAPI(lat: string, lon: string, apiKey: string): Promise<O
   return fetch(`http://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=1&appid=${apiKey}`)
   .then(res => res.json())
   .then(res => {
-    console.log(res)
     return res as OpenWeatherAPILocationData
   })
 }
@@ -163,7 +162,7 @@ function recursivelyUpdateLastDataUpdate(): void {
   let d: Date = new Date()
   let h: Date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() + 1, 0, 0)
   let e: number = h.valueOf() - d.valueOf()
-  if (e > 10) { // make sure we don't infinite loop
+  if (e > 100) { // make sure we don't infinite loop
     window.setTimeout(recursivelyUpdateLastDataUpdate, e) // timer at the next minute
   } else {
     window.setTimeout(recursivelyUpdateLastDataUpdate, 60000) // timer for 1 minute
@@ -176,7 +175,6 @@ function updateLastDataUpdate(): void {
   /*
   * calculate the amount of minutes since the last data update and display it in the settings screen
   */
-  console.log('updateLastDataUpdate')
   let d: Date = new Date()
   let timeSinceUpdate: number = Math.floor((d.valueOf() - weatherAppState.lastDataUpdate.valueOf()) / 60000)
   document.querySelector('#last-update-time')!.innerHTML = String(timeSinceUpdate)
@@ -427,6 +425,4 @@ interface Wind {
   deg:   number;
 }
 
-
-
-console.log('finished running weather.ts')
+// console.log('finished running weather.ts') // DEBUG

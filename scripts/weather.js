@@ -65,7 +65,7 @@ function writeLocalStorageWeather() {
 }
 function getLocation() {
     if (!navigator.geolocation) {
-        console.log('Geolocation not supported by browser');
+        console.log('Error: Geolocation not supported by browser');
     }
     else {
         navigator.geolocation.getCurrentPosition(
@@ -77,7 +77,7 @@ function getLocation() {
         }, 
         // error
         function () {
-            console.log('failed getting location');
+            console.log('Error: Failed getting location');
         });
     }
 }
@@ -89,8 +89,8 @@ function getWeatherHourly() {
     var d = new Date();
     var h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours() + 1, 0, 0, 0);
     var e = h.valueOf() - d.valueOf();
-    if (e > 10) { // just in case to prevent infinite loops
-        window.setTimeout(function () { return getWeatherHourly; }, e); // timer at the next hour
+    if (e > 100) { // just in case to prevent infinite loops
+        window.setTimeout(getWeatherHourly, e); // timer at the next hour
     }
     else {
         window.setTimeout(getWeatherHourly, 3600000); // timer for 1 hour
@@ -133,7 +133,6 @@ function getLocationFromAPI(lat, lon, apiKey) {
     return fetch("http://api.openweathermap.org/data/2.5/find?lat=" + lat + "&lon=" + lon + "&cnt=1&appid=" + apiKey)
         .then(function (res) { return res.json(); })
         .then(function (res) {
-        console.log(res);
         return res;
     });
 }
@@ -146,7 +145,7 @@ function recursivelyUpdateLastDataUpdate() {
     var d = new Date();
     var h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() + 1, 0, 0);
     var e = h.valueOf() - d.valueOf();
-    if (e > 10) { // make sure we don't infinite loop
+    if (e > 100) { // make sure we don't infinite loop
         window.setTimeout(recursivelyUpdateLastDataUpdate, e); // timer at the next minute
     }
     else {
@@ -158,7 +157,6 @@ function updateLastDataUpdate() {
     /*
     * calculate the amount of minutes since the last data update and display it in the settings screen
     */
-    console.log('updateLastDataUpdate');
     var d = new Date();
     var timeSinceUpdate = Math.floor((d.valueOf() - weatherAppState.lastDataUpdate.valueOf()) / 60000);
     document.querySelector('#last-update-time').innerHTML = String(timeSinceUpdate);
@@ -257,4 +255,4 @@ var Main;
     Main["Clouds"] = "Clouds";
     Main["Rain"] = "Rain";
 })(Main || (Main = {}));
-console.log('finished running weather.ts');
+// console.log('finished running weather.ts') // DEBUG
