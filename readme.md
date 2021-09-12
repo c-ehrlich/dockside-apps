@@ -5,7 +5,7 @@
 ![Dockside Apps Screenshot 3](https://i.imgur.com/WySdt7g.jpg)
 
 ## What is it?
-Dockside apps is a suite of tiny tools, designed to be run in the empty space to the left and right of the MacOS dock. Everything is built in very simple HTML/CSS/JS without external libraries. All apps use local storage to prevent data loss.
+Dockside apps is a suite of tiny tools, designed to be run in the empty space to the left and right of the MacOS dock. Everything is built in very simple HTML/CSS/JS without external libraries and without relying on a server component (other than external APIs). All apps use local storage to prevent data loss.
 
 ## Available Apps
 * Notes
